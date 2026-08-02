@@ -1,4 +1,6 @@
-# お品書き / Oshinagaki
+# japan-menu-app
+
+Working app title: お品書き / *Oshinagaki* (placeholder, see open question #4 in the PRD).
 
 Japanese menu scanner and learning tool for iOS. Point your camera at an izakaya menu, get a structured list of dishes with translation, furigana, romaji, a plain-English description of what the dish actually is, plus ordering support and vocabulary saving.
 
