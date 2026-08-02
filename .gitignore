@@ -6,3 +6,14 @@ DerivedData/
 .env
 .env.local
 node_modules/
+
+# Third-party menu photos — copyrighted, not ours to redistribute.
+# The labels in benchmark/labels/ are the tracked artifact.
+menu-pics/
+benchmark/images/
+benchmark/results/
+
+# Python
+.venv/
+__pycache__/
+*.pyc

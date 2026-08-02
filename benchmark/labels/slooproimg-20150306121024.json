@@ -1,0 +1,23 @@
+{
+  "image": "slooproimg-20150306121024.jpg",
+  "source_file": "slooProImg_20150306121024.jpg",
+  "labeled": false,
+  "attributes": {
+    "provenance": "web",
+    "orientation": null,
+    "script": null,
+    "surface": null,
+    "lighting": null,
+    "angle": null,
+    "blur": null,
+    "columns": null
+  },
+  "sections": [
+    {
+      "header_ja": null,
+      "items": []
+    }
+  ],
+  "decorative_text": [],
+  "notes": ""
+}

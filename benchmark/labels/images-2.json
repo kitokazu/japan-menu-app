@@ -1,0 +1,23 @@
+{
+  "image": "images-2.jpg",
+  "source_file": "images (2).jpeg",
+  "labeled": false,
+  "attributes": {
+    "provenance": "web",
+    "orientation": null,
+    "script": null,
+    "surface": null,
+    "lighting": null,
+    "angle": null,
+    "blur": null,
+    "columns": null
+  },
+  "sections": [
+    {
+      "header_ja": null,
+      "items": []
+    }
+  ],
+  "decorative_text": [],
+  "notes": ""
+}

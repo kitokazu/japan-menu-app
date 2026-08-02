@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Izakaya menu ground-truth label",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["image", "source_file", "attributes", "sections"],
+  "properties": {
+    "image": {
+      "type": "string",
+      "description": "Filename of the normalized image in benchmark/images/"
+    },
+    "source_file": {
+      "type": "string",
+      "description": "Original filename this was normalized from"
+    },
+    "labeled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Set true once a human has filled in sections. Unlabeled images are skipped by score.py."
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Difficulty tags. The scorer breaks results down by these, so fill them in even before labeling items.",
+      "additionalProperties": false,
+      "required": ["provenance"],
+      "properties": {
+        "provenance": {
+          "enum": ["web", "field"],
+          "description": "web = downloaded from the internet (clean, straight-on). field = photographed in a real venue. Report these separately; web-only accuracy overstates real-world performance."
+        },
+        "orientation": { "enum": ["vertical", "horizontal", "mixed"] },
+        "script": {
+          "enum": ["printed", "brush", "handwritten", "chalkboard", "mixed"],
+          "description": "brush = 筆文字, chalkboard = white-on-black handwriting"
+        },
+        "surface": {
+          "enum": ["paper", "laminate", "chalkboard", "tanzaku", "screen", "poster", "digital"],
+          "description": "tanzaku = 短冊 wall strips, digital = a PDF/graphic rather than a photograph"
+        },
+        "lighting": { "enum": ["good", "dim", "glare", "mixed"] },
+        "angle": { "enum": ["straight", "angled"] },
+        "blur": { "enum": ["none", "slight", "heavy"] },
+        "columns": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of visual columns. Multi-column layouts with detached price columns are the hard price-binding case."
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "Menu sections in reading order. Items with no section header go in a section with header_ja: null.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["header_ja", "items"],
+        "properties": {
+          "header_ja": {
+            "type": ["string", "null"],
+            "description": "Section header exactly as printed, e.g. 本日のおすすめ. null if the items sit under no header."
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name_ja", "price"],
+              "properties": {
+                "name_ja": {
+                  "type": "string",
+                  "description": "Dish name exactly as printed, including okurigana. Exclude parenthetical notes — put those in note_ja."
+                },
+                "reading": {
+                  "type": ["string", "null"],
+                  "description": "Hiragana reading. Optional at benchmark time; required later for the dictionary."
+                },
+                "price": {
+                  "type": ["integer", "null"],
+                  "description": "Yen, digits only. null when the item has no printed price."
+                },
+                "price_note": {
+                  "type": ["string", "null"],
+                  "description": "Qualifier printed with the price, e.g. 各1本, 2人前, 時価"
+                },
+                "note_ja": {
+                  "type": ["string", "null"],
+                  "description": "Parenthetical detail printed with the item, e.g. バター醤油 or カレー or のりしお"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "decorative_text": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Text that is NOT an item or a section header — shop name, slogans, tax notices, seat-charge notes, mascot dialogue. The parser must not emit these as items; listing them here lets the scorer flag that failure specifically."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-text notes for the labeler: ambiguities, unreadable regions, judgment calls."
+    }
+  }
+}

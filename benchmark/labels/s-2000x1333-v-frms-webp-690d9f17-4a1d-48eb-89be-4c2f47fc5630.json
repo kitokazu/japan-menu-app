@@ -1,0 +1,23 @@
+{
+  "image": "s-2000x1333-v-frms-webp-690d9f17-4a1d-48eb-89be-4c2f47fc5630.jpg",
+  "source_file": "s-2000x1333_v-frms_webp_690d9f17-4a1d-48eb-89be-4c2f47fc5630_middle.webp",
+  "labeled": false,
+  "attributes": {
+    "provenance": "web",
+    "orientation": null,
+    "script": null,
+    "surface": null,
+    "lighting": null,
+    "angle": null,
+    "blur": null,
+    "columns": null
+  },
+  "sections": [
+    {
+      "header_ja": null,
+      "items": []
+    }
+  ],
+  "decorative_text": [],
+  "notes": ""
+}

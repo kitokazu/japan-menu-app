@@ -1,0 +1,71 @@
+{
+  "image": "menu.jpg",
+  "source_file": "menu.jpg",
+  "labeled": true,
+  "attributes": {
+    "provenance": "web",
+    "orientation": "horizontal",
+    "script": "printed",
+    "surface": "digital",
+    "lighting": "good",
+    "angle": "straight",
+    "blur": "none",
+    "columns": 2
+  },
+  "sections": [
+    {
+      "header_ja": "サラダ&野菜",
+      "items": [
+        { "name_ja": "山盛り貝入りポテトサラダ", "reading": null, "price": 480, "price_note": null, "note_ja": null },
+        { "name_ja": "フレッシュパクチーサラダ", "reading": null, "price": 850, "price_note": null, "note_ja": null },
+        { "name_ja": "スモーク牡蠣のビネガーサラダ", "reading": null, "price": 980, "price_note": null, "note_ja": null },
+        { "name_ja": "子持ち昆布と豆腐のサラダ", "reading": null, "price": 850, "price_note": null, "note_ja": null },
+        { "name_ja": "採れたて生野菜", "reading": null, "price": 880, "price_note": null, "note_ja": null },
+        { "name_ja": "冷やしトマト", "reading": null, "price": 450, "price_note": null, "note_ja": null },
+        { "name_ja": "オニオンスライス", "reading": null, "price": 380, "price_note": null, "note_ja": null }
+      ]
+    },
+    {
+      "header_ja": "串カツ",
+      "items": [
+        { "name_ja": "牡蠣", "reading": "かき", "price": 380, "price_note": "各1本", "note_ja": null },
+        { "name_ja": "蛤", "reading": "はまぐり", "price": 380, "price_note": "各1本", "note_ja": "ハマグリ" },
+        { "name_ja": "浅利", "reading": "あさり", "price": 380, "price_note": "各1本", "note_ja": null }
+      ]
+    },
+    {
+      "header_ja": "あなどれないつまみ",
+      "items": [
+        { "name_ja": "情熱のフライドポテト", "reading": null, "price": 450, "price_note": null, "note_ja": "バター醤油 or カレー or のりしお" },
+        { "name_ja": "ガーリックトースト", "reading": null, "price": 300, "price_note": null, "note_ja": null },
+        { "name_ja": "枝豆", "reading": "えだまめ", "price": 380, "price_note": null, "note_ja": null },
+        { "name_ja": "きゅうり一本漬け", "reading": null, "price": 350, "price_note": null, "note_ja": null },
+        { "name_ja": "季節の浅漬け", "reading": null, "price": 450, "price_note": null, "note_ja": null }
+      ]
+    },
+    {
+      "header_ja": "〆しめ",
+      "items": [
+        { "name_ja": "牡蠣土鍋ごはん", "reading": null, "price": 1000, "price_note": "2人前", "note_ja": null },
+        { "name_ja": "常連さんだけのスパイシー牡蠣フライカレー", "reading": null, "price": 850, "price_note": null, "note_ja": null },
+        { "name_ja": "牡蠣ソース焼きそば", "reading": null, "price": 850, "price_note": null, "note_ja": null },
+        { "name_ja": "牡蠣ペペロンチーノ", "reading": null, "price": 950, "price_note": null, "note_ja": null },
+        { "name_ja": "焼きおにぎり", "reading": null, "price": 250, "price_note": null, "note_ja": "ネコの好物" },
+        { "name_ja": "塩ラーメン", "reading": null, "price": 650, "price_note": null, "note_ja": "貝のエキス" },
+        { "name_ja": "貝出汁茶漬け", "reading": null, "price": 480, "price_note": null, "note_ja": null }
+      ]
+    },
+    {
+      "header_ja": "甘味",
+      "items": [
+        { "name_ja": "白玉きなこアイスクリーム", "reading": null, "price": 300, "price_note": null, "note_ja": null },
+        { "name_ja": "杏仁豆腐", "reading": "あんにんどうふ", "price": 330, "price_note": null, "note_ja": null },
+        { "name_ja": "懐かしのメロンボール", "reading": null, "price": 250, "price_note": null, "note_ja": "★ロングセラーのシャーベット" }
+      ]
+    }
+  ],
+  "decorative_text": [
+    "価格はすべて税別です"
+  ],
+  "notes": "EXAMPLE LABEL — transcribed from the image but not independently verified. Check it before trusting any benchmark number that includes this file. Modeling choices worth copying: (1) 串カツ is a boxed sub-group inside あなどれないつまみ, but sections here are flat, so it gets its own section. (2) Its three items share one 380 / 各1本 price, repeated on each item. (3) Parenthetical detail (バター醤油 or カレー or のりしお, ネコの好物, 貝のエキス) goes in note_ja, never in name_ja. (4) 2人前 is a price_note, not part of the dish name."
+}

@@ -1,0 +1,7 @@
+anthropic>=0.116.0
+pillow>=10.0.0
+
+# Optional decoders for source images the benchmark set happens to contain.
+# normalize.py reports which files it skipped if these are missing.
+pillow-avif-plugin>=1.4.0
+pillow-heif>=0.16.0
