@@ -1,0 +1,207 @@
+{
+  "sections": [
+    {
+      "header_ja": "サラダ&野菜",
+      "items": [
+        {
+          "name_ja": "山盛り貝入りポテトサラダ",
+          "note_ja": null,
+          "price": 480,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "フレッシュパクチーサラダ",
+          "note_ja": null,
+          "price": 850,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "スモーク牡蠣のビネガーサラダ",
+          "note_ja": null,
+          "price": 980,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "子持ち昆布と豆腐のサラダ",
+          "note_ja": null,
+          "price": 850,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "採れたて生野菜",
+          "note_ja": null,
+          "price": 880,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "冷やしトマト",
+          "note_ja": null,
+          "price": 450,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "オニオンスライス",
+          "note_ja": null,
+          "price": 380,
+          "price_note": null,
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "header_ja": "串カツ",
+      "items": [
+        {
+          "name_ja": "牡蠣",
+          "note_ja": null,
+          "price": 380,
+          "price_note": "各1本",
+          "confidence": "high"
+        },
+        {
+          "name_ja": "蛤",
+          "note_ja": "ハマグリ",
+          "price": 380,
+          "price_note": "各1本",
+          "confidence": "high"
+        },
+        {
+          "name_ja": "浅利",
+          "note_ja": null,
+          "price": 380,
+          "price_note": "各1本",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "header_ja": "あなどれないつまみ",
+      "items": [
+        {
+          "name_ja": "情熱のフライドポテト",
+          "note_ja": "バター醤油 or カレー or のりしお",
+          "price": 450,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "ガーリックトースト",
+          "note_ja": null,
+          "price": 300,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "枝豆",
+          "note_ja": null,
+          "price": 380,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "きゅうり一本漬け",
+          "note_ja": null,
+          "price": 350,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "季節の浅漬け",
+          "note_ja": null,
+          "price": 450,
+          "price_note": null,
+          "confidence": "low"
+        }
+      ]
+    },
+    {
+      "header_ja": "〆しめ",
+      "items": [
+        {
+          "name_ja": "牡蠣土鍋ごはん",
+          "note_ja": null,
+          "price": 1000,
+          "price_note": "2人前",
+          "confidence": "high"
+        },
+        {
+          "name_ja": "常連さんだけのスパイシー牡蠣フライカレー",
+          "note_ja": null,
+          "price": 850,
+          "price_note": null,
+          "confidence": "medium"
+        },
+        {
+          "name_ja": "牡蠣ソース焼きそば",
+          "note_ja": null,
+          "price": 850,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "牡蠣ペペロンチーノ",
+          "note_ja": null,
+          "price": 950,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "焼きおにぎり",
+          "note_ja": "ネコの好物",
+          "price": 250,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "塩ラーメン",
+          "note_ja": "貝のエキス",
+          "price": 650,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "貝出汁茶漬け",
+          "note_ja": null,
+          "price": 480,
+          "price_note": null,
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "header_ja": "甘味",
+      "items": [
+        {
+          "name_ja": "白玉きなこアイスクリーム",
+          "note_ja": null,
+          "price": 300,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "杏仁豆腐",
+          "note_ja": null,
+          "price": 330,
+          "price_note": null,
+          "confidence": "high"
+        },
+        {
+          "name_ja": "懐かしのメロンボール",
+          "note_ja": "★ロングセラーのシャーベット",
+          "price": 250,
+          "price_note": null,
+          "confidence": "high"
+        }
+      ]
+    }
+  ],
+  "decorative_text": [
+    "価格はすべて税別です"
+  ]
+}

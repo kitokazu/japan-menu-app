@@ -1,0 +1,38 @@
+# XcodeGen manifest — regenerate the .xcodeproj with:
+#   cd app && xcodegen generate
+# The .xcodeproj is generated output and stays out of git; this file is the
+# source of truth for project configuration.
+name: Oshinagaki
+options:
+  bundleIdPrefix: dev.kaitokazu
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    INFOPLIST_KEY_UIUserInterfaceStyle: Dark
+
+targets:
+  Oshinagaki:
+    type: application
+    platform: iOS
+    sources:
+      - path: Oshinagaki
+    info:
+      path: Oshinagaki/Info.plist
+      properties:
+        CFBundleDisplayName: Oshinagaki
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSCameraUsageDescription: >-
+          Oshinagaki uses the camera to photograph menus so they can be
+          translated and explained.
+        UIUserInterfaceStyle: Dark
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.kaitokazu.oshinagaki
+        CODE_SIGN_STYLE: Automatic

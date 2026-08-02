@@ -17,3 +17,6 @@ benchmark/results/
 .venv/
 __pycache__/
 *.pyc
+
+# Xcode project is generated from app/project.yml via xcodegen
+app/Oshinagaki.xcodeproj/
