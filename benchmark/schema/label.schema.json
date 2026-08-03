@@ -18,6 +18,15 @@
       "default": false,
       "description": "Set true once a human has filled in sections. Unlabeled images are skipped by score.py."
     },
+    "labeled_by": {
+      "type": ["string", "null"],
+      "description": "Who transcribed this label (set by the labeling tool)."
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Set true once the project owner has checked this label against the image. Labels from contributors start unverified."
+    },
     "attributes": {
       "type": "object",
       "description": "Difficulty tags. The scorer breaks results down by these, so fill them in even before labeling items.",

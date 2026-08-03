@@ -18,12 +18,13 @@ Ordered by what unblocks what. Items marked 🔑 are things only you can do; not
 ## Ongoing (the 2–3 week background loop)
 
 5. 🔑 **Photograph menus in real venues.** Target 30–50, weighted toward what the current set completely lacks: chalkboard specials, 短冊 wall strips, brush script, dim light, glare, angled one-handed shots. Every dinner out is a data-collection run. Shoot the ugly ones on purpose; a photo you're embarrassed by is a good test case.
-6. 🔑 **Label as you go.** After each batch:
+6. 🔑 **Label as you go — use the web tool.** After each batch:
    ```bash
    .venv/bin/python benchmark/scripts/normalize.py <folder-of-new-photos>
    .venv/bin/python benchmark/scripts/init_labels.py --provenance field
+   python3 benchmark/labeling/server.py     # -> http://localhost:8788
    ```
-   then fill in the JSON stubs (conventions in `benchmark/README.md`) and set `"labeled": true`. Do 2–3 per evening rather than a heroic weekend; label quality drops fast with fatigue.
+   The tool shows image and form side by side and writes into `benchmark/labels/` directly. To recruit Japanese-reading friends, run `cloudflared tunnel --url http://localhost:8788` and share the URL privately; their labels arrive marked `needs review`, and you verify them in the Review flow before they count. Do 2–3 per evening rather than a heroic weekend; label quality drops fast with fatigue.
 7. **Label 10–15 of the existing web images too.** They're the clean baseline the field numbers get compared against, and labeling easy images first builds the habit before the chalkboards test it.
 
 ## When ~10 field photos are labeled

@@ -42,6 +42,24 @@ Steps 4 and 5 are cheap to repeat. Step 3 is the work.
 
 ## Labeling
 
+The fastest way to label is the web tool — image and form side by side, schema enforced by the UI, saves straight into `benchmark/labels/`:
+
+```bash
+python3 benchmark/labeling/server.py        # -> http://localhost:8788
+```
+
+To let other people label (they need to read Japanese), expose it with a tunnel and share the URL privately:
+
+```bash
+cloudflared tunnel --url http://localhost:8788    # or: tailscale funnel 8788
+```
+
+Contributor labels record who wrote them (`labeled_by`) and stay `verified: false` until you check them against the image and mark them verified in the tool. The scorer warns when unverified labels are included in a run, and any content edit resets verification. Ground-truth errors poison every downstream metric silently, so review everything you didn't write yourself, and spot-check what you did.
+
+When a session ends, the labels are ordinary files: `git diff benchmark/labels`, commit. Take the tunnel down afterwards — the images are third-party photos and anyone with the URL can write labels.
+
+### Conventions
+
 `benchmark/labels/menu.json` is a filled-in worked example (transcribed but unverified, so check it before trusting numbers that include it). Copy its conventions:
 
 - `name_ja` is the dish name **exactly as printed**. No normalizing, no added kanji.

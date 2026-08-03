@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu labeling — お品書き</title>
+<style>
+  :root {
+    --bg: #16161a; --panel: #1f1f27; --panel2: #26262f; --line: #34343f;
+    --text: #e8e8ec; --dim: #9a9aa5; --accent: #e8a33d; --ok: #6fbf73; --warn: #e07b54;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 14px/1.45 -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; }
+  button { font: inherit; color: var(--text); background: var(--panel2); border: 1px solid var(--line);
+           border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #16161a; border-color: var(--accent); font-weight: 600; }
+  button.small { padding: 2px 8px; font-size: 12px; }
+  input, select, textarea { font: inherit; color: var(--text); background: var(--bg);
+           border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  input.ja { font-size: 16px; }
+  header { display: flex; align-items: center; gap: 16px; padding: 10px 16px;
+           background: var(--panel); border-bottom: 1px solid var(--line);
+           position: sticky; top: 0; z-index: 10; }
+  header h1 { font-size: 15px; margin: 0; }
+  header .spacer { flex: 1; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--dim); }
+  .tag.ok { color: var(--ok); border-color: var(--ok); }
+  .tag.warn { color: var(--warn); border-color: var(--warn); }
+  main { padding: 16px; }
+
+  /* dashboard */
+  .counts { display: flex; gap: 24px; margin-bottom: 16px; }
+  .counts div b { font-size: 22px; display: block; }
+  table.list { width: 100%; border-collapse: collapse; }
+  table.list th, table.list td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+  table.list th { color: var(--dim); font-weight: 500; font-size: 12px; }
+  table.list tr:hover td { background: var(--panel); cursor: pointer; }
+
+  /* editor */
+  .editor { display: grid; grid-template-columns: minmax(360px, 46%) 1fr; gap: 16px;
+            height: calc(100vh - 60px); }
+  .viewer { position: relative; background: #000; border: 1px solid var(--line); border-radius: 10px;
+            overflow: hidden; user-select: none; }
+  .viewer img { position: absolute; transform-origin: 0 0; cursor: grab; max-width: none; }
+  .viewer .tools { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; z-index: 2; }
+  .form { overflow-y: auto; padding-right: 4px; }
+  fieldset { border: 1px solid var(--line); border-radius: 10px; margin: 0 0 14px; padding: 12px; }
+  legend { color: var(--dim); font-size: 12px; padding: 0 6px; }
+  .attrs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .attrs label { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--dim); }
+  .section-block { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+                   padding: 10px; margin-bottom: 12px; }
+  .section-head { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .section-head input { flex: 1; font-size: 16px; }
+  table.items { width: 100%; border-collapse: collapse; }
+  table.items th { font-size: 11px; color: var(--dim); font-weight: 500; text-align: left; padding: 2px 4px; }
+  table.items td { padding: 2px 4px; }
+  table.items input { width: 100%; }
+  td.c-price { width: 76px; } td.c-pnote { width: 90px; } td.c-read { width: 130px; } td.c-x { width: 30px; }
+  .row-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .savebar { position: sticky; bottom: 0; background: var(--bg); padding: 12px 0;
+             display: flex; gap: 10px; align-items: center; border-top: 1px solid var(--line); }
+  .hint { color: var(--dim); font-size: 12px; }
+  .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+           background: var(--panel2); border: 1px solid var(--accent); border-radius: 10px;
+           padding: 10px 18px; z-index: 50; display: none; }
+  .conventions { font-size: 12px; color: var(--dim); margin: 0 0 12px; padding: 10px 12px;
+                 background: var(--panel); border-radius: 10px; border: 1px solid var(--line); }
+  .conventions b { color: var(--text); }
+  #nameGate { max-width: 420px; margin: 80px auto; text-align: center; }
+  #nameGate input { width: 100%; font-size: 16px; margin: 12px 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>お品書き — menu labeling</h1>
+  <span class="tag" id="whoami"></span>
+  <span class="spacer"></span>
+  <button id="navDash">Images</button>
+  <button class="primary" id="navNext">Label next ›</button>
+</header>
+
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+const $ = (sel, el) => (el || document).querySelector(sel);
+const api = {
+  state:   ()            => fetch("/api/state").then(r => r.json()),
+  label:   (stem)        => fetch("/api/label/" + stem).then(r => r.json()),
+  claim:   (labeler)     => fetch("/api/claim", {method:"POST", body: JSON.stringify({labeler})}).then(r => r.json()),
+  release: (stem)        => fetch("/api/release", {method:"POST", body: JSON.stringify({stem})}),
+  save:    (stem, label, labeler) =>
+    fetch("/api/label/" + stem, {method:"POST", body: JSON.stringify({label, labeler})}).then(r => r.json()),
+  verify:  (stem, verified) =>
+    fetch("/api/verify/" + stem, {method:"POST", body: JSON.stringify({verified})}).then(r => r.json()),
+};
+
+let me = localStorage.getItem("labeler") || "";
+let current = null;   // stem currently being edited
+let dirty = false;
+
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 2200);
+}
+
+window.addEventListener("beforeunload", (e) => {
+  if (dirty) { e.preventDefault(); }
+  if (current) navigator.sendBeacon?.("/api/release", JSON.stringify({stem: current}));
+});
+
+/* ---------- name gate ---------- */
+
+function askName() {
+  $("#main").innerHTML = `
+    <div id="nameGate">
+      <h2>Who is labeling?</h2>
+      <p class="hint">Your name is stored with each label you write, so the owner
+      knows what to review. You need to be able to read Japanese menus.</p>
+      <input id="nameInput" placeholder="Name" maxlength="60">
+      <button class="primary" id="nameGo">Start</button>
+    </div>`;
+  $("#nameGo").onclick = () => {
+    const v = $("#nameInput").value.trim();
+    if (!v) return;
+    me = v; localStorage.setItem("labeler", v);
+    $("#whoami").textContent = v;
+    dashboard();
+  };
+  $("#nameInput").addEventListener("keydown", e => { if (e.key === "Enter") $("#nameGo").click(); });
+}
+
+/* ---------- dashboard ---------- */
+
+async function dashboard() {
+  if (current) { api.release(current); current = null; }
+  dirty = false;
+  const s = await api.state();
+  const rows = s.images.map(r => `
+    <tr data-stem="${r.stem}">
+      <td>${r.image}</td>
+      <td>${r.provenance || ""}</td>
+      <td>${r.labeled ? (r.item_count + " items") : ""}</td>
+      <td>${r.labeled_by || ""}</td>
+      <td>${statusTag(r)}</td>
+    </tr>`).join("");
+  $("#main").innerHTML = `
+    <div class="counts">
+      <div><b>${s.counts.total}</b><span class="hint">images</span></div>
+      <div><b>${s.counts.labeled}</b><span class="hint">labeled</span></div>
+      <div><b>${s.counts.verified}</b><span class="hint">verified</span></div>
+    </div>
+    <table class="list">
+      <tr><th>image</th><th>provenance</th><th>items</th><th>labeled by</th><th>status</th></tr>
+      ${rows}
+    </table>`;
+  document.querySelectorAll("tr[data-stem]").forEach(tr => {
+    tr.onclick = () => editor(tr.dataset.stem);
+  });
+}
+
+function statusTag(r) {
+  if (r.verified) return `<span class="tag ok">verified</span>`;
+  if (r.labeled)  return `<span class="tag warn">needs review</span>`;
+  if (r.claimed_by) return `<span class="tag">${r.claimed_by} labeling…</span>`;
+  return `<span class="tag">unlabeled</span>`;
+}
+
+/* ---------- editor ---------- */
+
+const ATTRS = {
+  provenance:  ["web", "field"],
+  orientation: ["vertical", "horizontal", "mixed"],
+  script:      ["printed", "brush", "handwritten", "chalkboard", "mixed"],
+  surface:     ["paper", "laminate", "chalkboard", "tanzaku", "screen", "poster", "digital"],
+  lighting:    ["good", "dim", "glare", "mixed"],
+  angle:       ["straight", "angled"],
+  blur:        ["none", "slight", "heavy"],
+};
+
+async function editor(stem) {
+  const label = await api.label(stem);
+  if (label.error) { toast("Couldn't load " + stem); return; }
+  current = stem;
+  dirty = false;
+
+  $("#main").innerHTML = `
+    <div class="editor">
+      <div class="viewer" id="viewer">
+        <div class="tools">
+          <button class="small" id="zReset">reset</button>
+          <button class="small" id="zRot">⟳ 90°</button>
+        </div>
+        <img id="menuImg" src="/images/${label.image}" draggable="false">
+      </div>
+      <div class="form" id="form"></div>
+    </div>`;
+
+  setupViewer();
+  renderForm(label);
+}
+
+/* image pan/zoom/rotate */
+function setupViewer() {
+  const img = $("#menuImg"), viewer = $("#viewer");
+  let scale = 1, tx = 0, ty = 0, rot = 0, dragging = null;
+  const apply = () => img.style.transform =
+    `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
+  img.onload = () => {
+    const fit = Math.min(viewer.clientWidth / img.naturalWidth, viewer.clientHeight / img.naturalHeight);
+    scale = fit; tx = (viewer.clientWidth - img.naturalWidth * fit) / 2; ty = 0;
+    apply();
+  };
+  viewer.addEventListener("wheel", e => {
+    e.preventDefault();
+    const rect = viewer.getBoundingClientRect();
+    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+    tx = mx - (mx - tx) * factor;
+    ty = my - (my - ty) * factor;
+    scale *= factor;
+    apply();
+  }, { passive: false });
+  img.addEventListener("pointerdown", e => {
+    dragging = { x: e.clientX - tx, y: e.clientY - ty };
+    img.setPointerCapture(e.pointerId);
+    img.style.cursor = "grabbing";
+  });
+  img.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    tx = e.clientX - dragging.x; ty = e.clientY - dragging.y; apply();
+  });
+  img.addEventListener("pointerup", () => { dragging = null; img.style.cursor = "grab"; });
+  $("#zReset").onclick = () => { rot = 0; img.onload(); };
+  $("#zRot").onclick = () => { rot = (rot + 90) % 360; apply(); };
+}
+
+function renderForm(label) {
+  const form = $("#form");
+  const a = label.attributes || {};
+  form.innerHTML = `
+    <p class="conventions">
+      <b>Conventions:</b> name exactly as printed · parenthetical detail → <b>note</b>,
+      never in the name · 各1本 / 2人前 / 時価 → <b>price note</b> · price digits only,
+      blank if none printed · slogans, shop name, tax notices → <b>decorative text</b> ·
+      reading (hiragana) is optional but valuable. <b>⏎ in a row adds the next row.</b>
+    </p>
+
+    <fieldset><legend>attributes</legend>
+      <div class="attrs" id="attrs">
+        ${Object.entries(ATTRS).map(([k, opts]) => `
+          <label>${k}
+            <select data-attr="${k}">
+              <option value=""></option>
+              ${opts.map(o => `<option ${a[k] === o ? "selected" : ""}>${o}</option>`).join("")}
+            </select>
+          </label>`).join("")}
+        <label>columns
+          <input type="number" min="1" data-attr="columns" value="${a.columns ?? ""}">
+        </label>
+      </div>
+    </fieldset>
+
+    <div id="sections"></div>
+    <div class="row-actions">
+      <button id="addSection">+ section</button>
+    </div>
+
+    <fieldset><legend>decorative text — one per line (slogans, shop name, tax notes)</legend>
+      <textarea id="decor" rows="3" style="width:100%">${(label.decorative_text || []).join("\n")}</textarea>
+    </fieldset>
+
+    <fieldset><legend>notes for the reviewer</legend>
+      <textarea id="notes" rows="2" style="width:100%">${label.notes || ""}</textarea>
+    </fieldset>
+
+    <div class="savebar">
+      <button class="primary" id="saveNext">Save & next</button>
+      <button id="save">Save</button>
+      ${label.labeled ? `<button id="verifyBtn">${label.verified ? "Un-verify" : "Mark verified ✓"}</button>` : ""}
+      <span class="hint" id="saveHint">
+        ${label.labeled ? `labeled by ${label.labeled_by || "?"}${label.verified ? " · verified" : " · not yet verified"}` : "unlabeled"}
+      </span>
+    </div>`;
+
+  const sectionsEl = $("#sections");
+  const sections = (label.sections && label.sections.length)
+    ? label.sections : [{ header_ja: null, items: [] }];
+  sections.forEach(sec => sectionsEl.appendChild(sectionBlock(sec)));
+
+  form.addEventListener("input", () => dirty = true);
+  $("#addSection").onclick = () => {
+    sectionsEl.appendChild(sectionBlock({ header_ja: "", items: [] }));
+    dirty = true;
+  };
+  $("#save").onclick = () => saveCurrent(label, false);
+  $("#saveNext").onclick = () => saveCurrent(label, true);
+  const vb = $("#verifyBtn");
+  if (vb) vb.onclick = async () => {
+    await api.verify(current, !label.verified);
+    toast(label.verified ? "Verification removed" : "Verified ✓");
+    dashboard();
+  };
+}
+
+function sectionBlock(sec) {
+  const div = document.createElement("div");
+  div.className = "section-block";
+  div.innerHTML = `
+    <div class="section-head">
+      <input class="ja sec-header" placeholder="section header (blank = no header)"
+             value="${esc(sec.header_ja || "")}">
+      <button class="small sec-del">remove</button>
+    </div>
+    <table class="items">
+      <tr><th>name (as printed)</th><th>reading</th><th>price</th><th>price note</th><th>note</th><th></th></tr>
+    </table>
+    <div class="row-actions"><button class="small add-item">+ item</button></div>`;
+  const table = div.querySelector("table");
+  (sec.items || []).forEach(it => table.appendChild(itemRow(it)));
+  if (!(sec.items || []).length) table.appendChild(itemRow({}));
+  div.querySelector(".add-item").onclick = () => {
+    const row = itemRow({});
+    table.appendChild(row);
+    row.querySelector("input").focus();
+    dirty = true;
+  };
+  div.querySelector(".sec-del").onclick = () => { div.remove(); dirty = true; };
+  return div;
+}
+
+function itemRow(it) {
+  const tr = document.createElement("tr");
+  tr.className = "item-row";
+  tr.innerHTML = `
+    <td><input class="ja f-name" value="${esc(it.name_ja || "")}"></td>
+    <td class="c-read"><input class="f-reading" value="${esc(it.reading || "")}"></td>
+    <td class="c-price"><input class="f-price" inputmode="numeric" value="${it.price ?? ""}"></td>
+    <td class="c-pnote"><input class="f-pnote" value="${esc(it.price_note || "")}"></td>
+    <td><input class="f-note" value="${esc(it.note_ja || "")}"></td>
+    <td class="c-x"><button class="small row-del">×</button></td>`;
+  tr.querySelector(".row-del").onclick = () => { tr.remove(); dirty = true; };
+  tr.addEventListener("keydown", e => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    const table = tr.closest("table");
+    if (tr === table.querySelector("tr.item-row:last-of-type")) {
+      const row = itemRow({});
+      table.appendChild(row);
+      row.querySelector("input").focus();
+    } else {
+      tr.nextElementSibling?.querySelector("input")?.focus();
+    }
+  });
+  return tr;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
+function collect(label) {
+  const attributes = {};
+  document.querySelectorAll("[data-attr]").forEach(el => {
+    const v = el.value.trim();
+    attributes[el.dataset.attr] =
+      el.dataset.attr === "columns" ? (v ? parseInt(v, 10) : null) : (v || null);
+  });
+
+  const sections = [];
+  document.querySelectorAll(".section-block").forEach(div => {
+    const header = div.querySelector(".sec-header").value.trim();
+    const items = [];
+    div.querySelectorAll("tr.item-row").forEach(tr => {
+      const name = tr.querySelector(".f-name").value.trim();
+      if (!name) return;
+      const price = tr.querySelector(".f-price").value.trim();
+      items.push({
+        name_ja: name,
+        reading: tr.querySelector(".f-reading").value.trim() || null,
+        price: price ? parseInt(price.replace(/[^0-9]/g, ""), 10) : null,
+        price_note: tr.querySelector(".f-pnote").value.trim() || null,
+        note_ja: tr.querySelector(".f-note").value.trim() || null,
+      });
+    });
+    if (items.length || header) sections.push({ header_ja: header || null, items });
+  });
+
+  return {
+    image: label.image,
+    source_file: label.source_file,
+    labeled: true,
+    attributes,
+    sections,
+    decorative_text: $("#decor").value.split("\n").map(s => s.trim()).filter(Boolean),
+    notes: $("#notes").value.trim(),
+  };
+}
+
+async function saveCurrent(label, advance) {
+  const data = collect(label);
+  const itemCount = data.sections.reduce((n, s) => n + s.items.length, 0);
+  if (!itemCount && !confirm("No items entered — save anyway?")) return;
+  if (!data.attributes.provenance) { toast("Set provenance (web/field) before saving"); return; }
+  const res = await api.save(current, data, me);
+  if (res.error) { toast("Save failed: " + res.error); return; }
+  dirty = false;
+  toast(`Saved ${itemCount} items ✓`);
+  if (advance) next(); else editor(current);
+}
+
+/* ---------- claim next ---------- */
+
+async function next() {
+  if (current) { await api.release(current); current = null; }
+  const res = await api.claim(me);
+  if (!res.stem) { toast("Nothing left to label 🎉"); dashboard(); return; }
+  editor(res.stem);
+}
+
+/* ---------- boot ---------- */
+
+$("#navDash").onclick = () => {
+  if (dirty && !confirm("Discard unsaved changes?")) return;
+  dashboard();
+};
+$("#navNext").onclick = () => {
+  if (dirty && !confirm("Discard unsaved changes?")) return;
+  next();
+};
+
+if (me) { $("#whoami").textContent = me; dashboard(); } else { askName(); }
+</script>
+</body>
+</html>

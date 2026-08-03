@@ -249,7 +249,9 @@ def main() -> int:
         if "parsed" not in result:
             errored.append((label["image"], result.get("error", "unknown")))
             continue
-        rows.append(score_image(label, result, args.threshold))
+        row = score_image(label, result, args.threshold)
+        row["verified"] = bool(label.get("verified"))
+        rows.append(row)
 
     print(f"run: {run_path.name}")
     print(f"model: {run['model']} / effort {run['effort']} / prompt {run['prompt']}")
@@ -266,6 +268,12 @@ def main() -> int:
     print_block("OVERALL", overall)
 
     # Coverage caveats are printed, never silently dropped.
+    unverified = [r["image"] for r in rows if not r.get("verified")]
+    if unverified:
+        print(
+            f"\n  ! {len(unverified)} of {len(rows)} scored label(s) are unverified — "
+            "review them in the labeling tool before trusting these numbers"
+        )
     if unlabeled:
         print(f"\n  ! {len(unlabeled)} image(s) excluded — not yet labeled")
     if errored:
