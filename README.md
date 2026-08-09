@@ -11,6 +11,7 @@ Japanese menu scanner and learning tool for iOS. Point your camera at an izakaya
 - [`docs/PRD.md`](docs/PRD.md) — full product requirements (v1 draft, Aug 2026)
 - [`docs/TODO.md`](docs/TODO.md) — current action items and why the test set matters
 - [`benchmark/README.md`](benchmark/README.md) — parse-accuracy harness: how to label images and benchmark models
+- [`collector/README.md`](collector/README.md) — hosted (Cloudflare Workers + R2) photo collection and labeling app to share with friends; `benchmark/scripts/sync_remote.py` syncs contributions into the repo
 
 ## App
 

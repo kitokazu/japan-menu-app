@@ -1,0 +1,19 @@
+{
+  // Hosted collection + labeling app for the parse benchmark.
+  // Deploy: npx wrangler deploy   (see README.md for first-time setup)
+  "name": "japan-menu-collector",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-08-01",
+  "rules": [
+    { "type": "Text", "globs": ["**/*.html"] }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "japan-menu-collector"
+    }
+  ]
+  // The shared passcode is a secret, never in this file:
+  //   npx wrangler secret put PASSCODE
+  // For local dev it comes from .dev.vars (gitignored).
+}

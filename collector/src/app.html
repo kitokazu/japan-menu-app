@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>お品書き — menu collection &amp; labeling</title>
+<style>
+  :root {
+    --bg: #16161a; --panel: #1f1f27; --panel2: #26262f; --line: #34343f;
+    --text: #e8e8ec; --dim: #9a9aa5; --accent: #e8a33d; --ok: #6fbf73; --warn: #e07b54;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 14px/1.45 -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; }
+  button { font: inherit; color: var(--text); background: var(--panel2); border: 1px solid var(--line);
+           border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #16161a; border-color: var(--accent); font-weight: 600; }
+  button.small { padding: 2px 8px; font-size: 12px; }
+  input, select, textarea { font: inherit; color: var(--text); background: var(--bg);
+           border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  input.ja { font-size: 16px; }
+  header { display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+           background: var(--panel); border-bottom: 1px solid var(--line);
+           position: sticky; top: 0; z-index: 10; flex-wrap: wrap; }
+  header h1 { font-size: 15px; margin: 0; }
+  header .spacer { flex: 1; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--dim); }
+  .tag.ok { color: var(--ok); border-color: var(--ok); }
+  .tag.warn { color: var(--warn); border-color: var(--warn); }
+  main { padding: 16px; }
+
+  /* dashboard */
+  .counts { display: flex; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+  .counts div b { font-size: 22px; display: block; }
+  .listwrap { overflow-x: auto; }
+  table.list { width: 100%; border-collapse: collapse; }
+  table.list th, table.list td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  table.list th { color: var(--dim); font-weight: 500; font-size: 12px; }
+  table.list tr:hover td { background: var(--panel); cursor: pointer; }
+
+  /* editor */
+  .editor { display: grid; grid-template-columns: minmax(360px, 46%) 1fr; gap: 16px;
+            height: calc(100vh - 60px); }
+  .viewer { position: relative; background: #000; border: 1px solid var(--line); border-radius: 10px;
+            overflow: hidden; user-select: none; touch-action: none; }
+  .viewer img { position: absolute; transform-origin: 0 0; cursor: grab; max-width: none; }
+  .viewer .tools { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; z-index: 2; }
+  .form { overflow-y: auto; padding-right: 4px; }
+  @media (max-width: 900px) {
+    .editor { grid-template-columns: 1fr; grid-template-rows: 45vh auto; height: auto; }
+    .viewer { height: 45vh; }
+    .form { overflow-y: visible; }
+  }
+  fieldset { border: 1px solid var(--line); border-radius: 10px; margin: 0 0 14px; padding: 12px; }
+  legend { color: var(--dim); font-size: 12px; padding: 0 6px; }
+  .attrs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  @media (max-width: 600px) { .attrs { grid-template-columns: repeat(2, 1fr); } }
+  .attrs label { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--dim); }
+  .section-block { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+                   padding: 10px; margin-bottom: 12px; }
+  .section-head { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .section-head input { flex: 1; font-size: 16px; }
+  table.items { width: 100%; border-collapse: collapse; }
+  table.items th { font-size: 11px; color: var(--dim); font-weight: 500; text-align: left; padding: 2px 4px; }
+  table.items td { padding: 2px 4px; }
+  table.items input { width: 100%; }
+  td.c-price { width: 76px; } td.c-pnote { width: 90px; } td.c-read { width: 130px; } td.c-x { width: 30px; }
+  .row-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .savebar { position: sticky; bottom: 0; background: var(--bg); padding: 12px 0;
+             display: flex; gap: 10px; align-items: center; border-top: 1px solid var(--line); flex-wrap: wrap; }
+  .hint { color: var(--dim); font-size: 12px; }
+  .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+           background: var(--panel2); border: 1px solid var(--accent); border-radius: 10px;
+           padding: 10px 18px; z-index: 50; display: none; max-width: 90vw; }
+  .conventions { font-size: 12px; color: var(--dim); margin: 0 0 12px; padding: 10px 12px;
+                 background: var(--panel); border-radius: 10px; border: 1px solid var(--line); }
+  .conventions b { color: var(--text); }
+  #gate { max-width: 420px; margin: 60px auto; text-align: center; }
+  #gate input { width: 100%; font-size: 16px; margin: 6px 0; }
+
+  /* upload */
+  .uploader { max-width: 560px; margin: 0 auto; }
+  .droplab { display: block; border: 2px dashed var(--line); border-radius: 14px; padding: 36px 20px;
+             text-align: center; cursor: pointer; color: var(--dim); margin-bottom: 14px; }
+  .droplab:hover, .droplab.drag { border-color: var(--accent); color: var(--text); }
+  .droplab b { display: block; font-size: 17px; color: var(--text); margin-bottom: 6px; }
+  .upl-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .upl-row img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; background: #000; }
+  .upl-row .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .upfield { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; font-size: 12px; color: var(--dim); }
+  .upfield input, .upfield select { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>お品書き</h1>
+  <span class="tag" id="whoami"></span>
+  <span class="spacer"></span>
+  <button id="navUpload">Upload photos</button>
+  <button id="navDash">Images</button>
+  <button class="primary" id="navNext">Label next ›</button>
+</header>
+
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+const $ = (sel, el) => (el || document).querySelector(sel);
+
+let me = localStorage.getItem("labeler") || "";
+let pass = localStorage.getItem("passcode") || "";
+let current = null;   // stem currently being edited
+let dirty = false;
+let imgObjectURL = null;
+
+async function req(path, opts) {
+  const o = opts || {};
+  o.headers = Object.assign({ "X-Passcode": pass }, o.headers || {});
+  const r = await fetch(path, o);
+  if (r.status === 401) { gate("That passcode was rejected."); throw new Error("unauthorized"); }
+  return r;
+}
+const reqJSON = (path, opts) => req(path, opts).then(r => r.json());
+
+const api = {
+  ping:    ()            => reqJSON("/api/ping"),
+  state:   ()            => reqJSON("/api/state"),
+  label:   (stem)        => reqJSON("/api/label/" + stem),
+  claim:   (labeler)     => reqJSON("/api/claim", {method:"POST", body: JSON.stringify({labeler})}),
+  release: (stem)        => req("/api/release", {method:"POST", body: JSON.stringify({stem})}),
+  save:    (stem, label, labeler) =>
+    reqJSON("/api/label/" + stem, {method:"POST", body: JSON.stringify({label, labeler})}),
+  verify:  (stem, verified) =>
+    reqJSON("/api/verify/" + stem, {method:"POST", body: JSON.stringify({verified})}),
+  discard: (stem)        => reqJSON("/api/upload/" + stem, {method:"DELETE"}),
+  // <img> cannot send the passcode header, so images arrive as blobs.
+  imageURL: async (image) => {
+    const r = await req("/api/image/" + image);
+    if (!r.ok) throw new Error("image fetch failed");
+    return URL.createObjectURL(await r.blob());
+  },
+};
+
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 2600);
+}
+
+window.addEventListener("beforeunload", (e) => {
+  if (dirty) { e.preventDefault(); }
+  if (current) navigator.sendBeacon?.("/api/release", JSON.stringify({stem: current}));
+});
+
+/* ---------- passcode + name gate ---------- */
+
+function gate(msg) {
+  $("#main").innerHTML = `
+    <div id="gate">
+      <h2>お品書き — menu data collection</h2>
+      <p class="hint">Photograph Japanese menus, upload them here, and transcribe
+      what they say. Labeling needs Japanese reading ability; uploading doesn't.
+      ${msg ? `<br><b style="color:var(--warn)">${msg}</b>` : ""}</p>
+      <input id="gateName" placeholder="Your name" maxlength="60" value="${esc(me)}">
+      <input id="gatePass" type="password" placeholder="Passcode" autocomplete="current-password">
+      <button class="primary" id="gateGo" style="margin-top:10px">Enter</button>
+    </div>`;
+  const go = async () => {
+    const name = $("#gateName").value.trim();
+    const pc = $("#gatePass").value;
+    if (!name || !pc) return;
+    pass = pc;
+    try { await api.ping(); } catch { return; }
+    me = name;
+    localStorage.setItem("labeler", me);
+    localStorage.setItem("passcode", pass);
+    $("#whoami").textContent = me;
+    uploadPage();
+  };
+  $("#gateGo").onclick = go;
+  $("#gatePass").addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+}
+
+/* ---------- upload ---------- */
+
+const MAX_DIM = 1568;      // matches benchmark/scripts/normalize.py
+const JPEG_QUALITY = 0.88;
+
+function uploadPage() {
+  leaveEditor();
+  $("#main").innerHTML = `
+    <div class="uploader">
+      <label class="droplab" id="drop">
+        <b>Take a photo or choose from your library</b>
+        Menus in the wild are the point: chalkboards, wall strips, dim light,
+        glare, weird angles. Ugly photos are good test data.
+        <input id="fileInput" type="file" accept="image/*" multiple hidden>
+      </label>
+      <div class="upfield"><span>Where was this? (restaurant / city — optional but helpful)</span>
+        <input id="upNote" maxlength="200" placeholder="e.g. 大衆酒場ゑびす, Osaka"></div>
+      <div class="upfield"><span>Source</span>
+        <select id="upProv">
+          <option value="field" selected>field — I photographed this in a real venue</option>
+          <option value="web">web — saved from the internet</option>
+        </select></div>
+      <div id="uplist"></div>
+    </div>`;
+  const input = $("#fileInput");
+  const drop = $("#drop");
+  input.onchange = () => { uploadFiles([...input.files]); input.value = ""; };
+  drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("drag"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+  drop.addEventListener("drop", e => {
+    e.preventDefault(); drop.classList.remove("drag");
+    uploadFiles([...e.dataTransfer.files].filter(f => f.type.startsWith("image/")));
+  });
+}
+
+/* Downscale to the benchmark's normalized resolution in the browser, so the
+   upload is a few hundred KB instead of 8MB. Modern browsers apply EXIF
+   orientation when decoding into an <img>, so portrait phone photos land
+   upright. The full-resolution original goes up too, for later re-normalization
+   at other resolutions. */
+async function normalizeImage(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    const scale = Math.min(1, MAX_DIM / Math.max(img.naturalWidth, img.naturalHeight));
+    const w = Math.round(img.naturalWidth * scale), h = Math.round(img.naturalHeight * scale);
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+    const blob = await new Promise((res, rej) =>
+      canvas.toBlob(b => b ? res(b) : rej(new Error("JPEG encode failed")), "image/jpeg", JPEG_QUALITY));
+    return blob;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+async function uploadFiles(files) {
+  if (!files.length) return;
+  const list = $("#uplist");
+  const note = $("#upNote").value.trim();
+  const prov = $("#upProv").value;
+  for (const file of files) {
+    const row = document.createElement("div");
+    row.className = "upl-row";
+    row.innerHTML = `<img><span class="name">${esc(file.name)}</span><span class="tag">preparing…</span>`;
+    list.prepend(row);
+    const status = row.querySelector(".tag");
+    try {
+      const blob = await normalizeImage(file);
+      row.querySelector("img").src = URL.createObjectURL(blob);
+      status.textContent = "uploading…";
+      const q = new URLSearchParams({ uploader: me, note, provenance: prov, filename: file.name });
+      const res = await reqJSON("/api/upload?" + q, { method: "POST", body: blob });
+      if (res.error) throw new Error(res.error);
+      // Original upload is best-effort; the normalized copy is already safe.
+      const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+      if (file.size <= 30 * 1024 * 1024) {
+        status.textContent = "saving original…";
+        await req(`/api/upload-original/${res.stem}?ext=${encodeURIComponent(ext)}`,
+                  { method: "POST", body: file }).catch(() => {});
+      }
+      status.textContent = "done ✓";
+      status.className = "tag ok";
+    } catch (e) {
+      status.textContent = "failed: " + (e.message || "couldn't read image");
+      status.className = "tag warn";
+    }
+  }
+}
+
+/* ---------- dashboard ---------- */
+
+async function dashboard() {
+  leaveEditor();
+  const s = await api.state();
+  const rows = s.images.map(r => `
+    <tr data-stem="${r.stem}">
+      <td>${r.image}</td>
+      <td>${r.provenance || ""}</td>
+      <td>${r.labeled ? (r.item_count + " items") : ""}</td>
+      <td>${esc(r.labeled_by || r.uploaded_by || "")}</td>
+      <td>${statusTag(r)}</td>
+    </tr>`).join("");
+  $("#main").innerHTML = `
+    <div class="counts">
+      <div><b>${s.counts.total}</b><span class="hint">images</span></div>
+      <div><b>${s.counts.field}</b><span class="hint">field photos</span></div>
+      <div><b>${s.counts.labeled}</b><span class="hint">labeled</span></div>
+      <div><b>${s.counts.verified}</b><span class="hint">verified</span></div>
+    </div>
+    <div class="listwrap">
+    <table class="list">
+      <tr><th>image</th><th>provenance</th><th>items</th><th>by</th><th>status</th></tr>
+      ${rows}
+    </table>
+    </div>`;
+  document.querySelectorAll("tr[data-stem]").forEach(tr => {
+    tr.onclick = () => editor(tr.dataset.stem);
+  });
+}
+
+function statusTag(r) {
+  if (r.verified) return `<span class="tag ok">verified</span>`;
+  if (r.labeled)  return `<span class="tag warn">needs review</span>`;
+  if (r.claimed_by) return `<span class="tag">${esc(r.claimed_by)} labeling…</span>`;
+  return `<span class="tag">unlabeled</span>`;
+}
+
+/* ---------- editor ---------- */
+
+const ATTRS = {
+  provenance:  ["web", "field"],
+  orientation: ["vertical", "horizontal", "mixed"],
+  script:      ["printed", "brush", "handwritten", "chalkboard", "mixed"],
+  surface:     ["paper", "laminate", "chalkboard", "tanzaku", "screen", "poster", "digital"],
+  lighting:    ["good", "dim", "glare", "mixed"],
+  angle:       ["straight", "angled"],
+  blur:        ["none", "slight", "heavy"],
+};
+
+function leaveEditor() {
+  if (current) { api.release(current); current = null; }
+  if (imgObjectURL) { URL.revokeObjectURL(imgObjectURL); imgObjectURL = null; }
+  dirty = false;
+}
+
+async function editor(stem) {
+  const label = await api.label(stem);
+  if (label.error) { toast("Couldn't load " + stem); return; }
+  leaveEditor();
+  current = stem;
+
+  $("#main").innerHTML = `
+    <div class="editor">
+      <div class="viewer" id="viewer">
+        <div class="tools">
+          <button class="small" id="zReset">reset</button>
+          <button class="small" id="zRot">⟳ 90°</button>
+        </div>
+        <img id="menuImg" draggable="false">
+      </div>
+      <div class="form" id="form"></div>
+    </div>`;
+
+  setupViewer();
+  renderForm(label);
+  try {
+    imgObjectURL = await api.imageURL(label.image);
+    $("#menuImg").src = imgObjectURL;
+  } catch { toast("Couldn't load the image"); }
+}
+
+/* image pan/zoom/rotate — wheel on desktop, drag + pinch on touch */
+function setupViewer() {
+  const img = $("#menuImg"), viewer = $("#viewer");
+  let scale = 1, tx = 0, ty = 0, rot = 0;
+  const pointers = new Map();
+  let pinchStart = null;
+  const apply = () => img.style.transform =
+    `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
+  const fit = () => {
+    const f = Math.min(viewer.clientWidth / img.naturalWidth, viewer.clientHeight / img.naturalHeight);
+    scale = f; tx = (viewer.clientWidth - img.naturalWidth * f) / 2; ty = 0;
+    apply();
+  };
+  img.onload = fit;
+  const zoomAt = (mx, my, factor) => {
+    tx = mx - (mx - tx) * factor;
+    ty = my - (my - ty) * factor;
+    scale *= factor;
+    apply();
+  };
+  viewer.addEventListener("wheel", e => {
+    e.preventDefault();
+    const rect = viewer.getBoundingClientRect();
+    zoomAt(e.clientX - rect.left, e.clientY - rect.top, e.deltaY < 0 ? 1.15 : 1 / 1.15);
+  }, { passive: false });
+  viewer.addEventListener("pointerdown", e => {
+    viewer.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 2) {
+      const [a, b] = [...pointers.values()];
+      pinchStart = { dist: Math.hypot(a.x - b.x, a.y - b.y), scale };
+    }
+  });
+  viewer.addEventListener("pointermove", e => {
+    if (!pointers.has(e.pointerId)) return;
+    const prev = pointers.get(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 1) {
+      tx += e.clientX - prev.x; ty += e.clientY - prev.y; apply();
+    } else if (pointers.size === 2 && pinchStart) {
+      const [a, b] = [...pointers.values()];
+      const dist = Math.hypot(a.x - b.x, a.y - b.y);
+      const rect = viewer.getBoundingClientRect();
+      const cx = (a.x + b.x) / 2 - rect.left, cy = (a.y + b.y) / 2 - rect.top;
+      const target = pinchStart.scale * (dist / pinchStart.dist);
+      zoomAt(cx, cy, target / scale);
+    }
+  });
+  const lift = e => {
+    pointers.delete(e.pointerId);
+    if (pointers.size < 2) pinchStart = null;
+  };
+  viewer.addEventListener("pointerup", lift);
+  viewer.addEventListener("pointercancel", lift);
+  $("#zReset").onclick = () => { rot = 0; fit(); };
+  $("#zRot").onclick = () => { rot = (rot + 90) % 360; apply(); };
+}
+
+function renderForm(label) {
+  const form = $("#form");
+  const a = label.attributes || {};
+  form.innerHTML = `
+    <p class="conventions">
+      <b>Conventions:</b> name exactly as printed · parenthetical detail → <b>note</b>,
+      never in the name · 各1本 / 2人前 / 時価 → <b>price note</b> · price digits only,
+      blank if none printed · slogans, shop name, tax notices → <b>decorative text</b> ·
+      reading (hiragana) is optional but valuable. <b>⏎ in a row adds the next row.</b>
+    </p>
+
+    <fieldset><legend>attributes</legend>
+      <div class="attrs" id="attrs">
+        ${Object.entries(ATTRS).map(([k, opts]) => `
+          <label>${k}
+            <select data-attr="${k}">
+              <option value=""></option>
+              ${opts.map(o => `<option ${a[k] === o ? "selected" : ""}>${o}</option>`).join("")}
+            </select>
+          </label>`).join("")}
+        <label>columns
+          <input type="number" min="1" data-attr="columns" value="${a.columns ?? ""}">
+        </label>
+      </div>
+    </fieldset>
+
+    <div id="sections"></div>
+    <div class="row-actions">
+      <button id="addSection">+ section</button>
+    </div>
+
+    <fieldset><legend>decorative text — one per line (slogans, shop name, tax notes)</legend>
+      <textarea id="decor" rows="3" style="width:100%">${(label.decorative_text || []).join("\n")}</textarea>
+    </fieldset>
+
+    <fieldset><legend>notes for the reviewer</legend>
+      <textarea id="notes" rows="2" style="width:100%">${label.notes || ""}</textarea>
+    </fieldset>
+
+    <div class="savebar">
+      <button class="primary" id="saveNext">Save &amp; next</button>
+      <button id="save">Save</button>
+      ${label.labeled ? `<button id="verifyBtn">${label.verified ? "Un-verify" : "Mark verified ✓"}</button>` : ""}
+      ${!label.labeled ? `<button id="discardBtn" class="small">Delete upload</button>` : ""}
+      <span class="hint" id="saveHint">
+        ${label.labeled ? `labeled by ${esc(label.labeled_by || "?")}${label.verified ? " · verified" : " · not yet verified"}` : "unlabeled"}
+      </span>
+    </div>`;
+
+  const sectionsEl = $("#sections");
+  const sections = (label.sections && label.sections.length)
+    ? label.sections : [{ header_ja: null, items: [] }];
+  sections.forEach(sec => sectionsEl.appendChild(sectionBlock(sec)));
+
+  form.addEventListener("input", () => dirty = true);
+  $("#addSection").onclick = () => {
+    sectionsEl.appendChild(sectionBlock({ header_ja: "", items: [] }));
+    dirty = true;
+  };
+  $("#save").onclick = () => saveCurrent(label, false);
+  $("#saveNext").onclick = () => saveCurrent(label, true);
+  const vb = $("#verifyBtn");
+  if (vb) vb.onclick = async () => {
+    await api.verify(current, !label.verified);
+    toast(label.verified ? "Verification removed" : "Verified ✓");
+    dashboard();
+  };
+  const db = $("#discardBtn");
+  if (db) db.onclick = async () => {
+    if (!confirm("Delete this photo entirely? Only do this for blurry shots or duplicates.")) return;
+    const res = await api.discard(current);
+    if (res.error) { toast(res.error); return; }
+    toast("Upload deleted");
+    dashboard();
+  };
+}
+
+function sectionBlock(sec) {
+  const div = document.createElement("div");
+  div.className = "section-block";
+  div.innerHTML = `
+    <div class="section-head">
+      <input class="ja sec-header" placeholder="section header (blank = no header)"
+             value="${esc(sec.header_ja || "")}">
+      <button class="small sec-del">remove</button>
+    </div>
+    <table class="items">
+      <tr><th>name (as printed)</th><th>reading</th><th>price</th><th>price note</th><th>note</th><th></th></tr>
+    </table>
+    <div class="row-actions"><button class="small add-item">+ item</button></div>`;
+  const table = div.querySelector("table");
+  (sec.items || []).forEach(it => table.appendChild(itemRow(it)));
+  if (!(sec.items || []).length) table.appendChild(itemRow({}));
+  div.querySelector(".add-item").onclick = () => {
+    const row = itemRow({});
+    table.appendChild(row);
+    row.querySelector("input").focus();
+    dirty = true;
+  };
+  div.querySelector(".sec-del").onclick = () => { div.remove(); dirty = true; };
+  return div;
+}
+
+function itemRow(it) {
+  const tr = document.createElement("tr");
+  tr.className = "item-row";
+  tr.innerHTML = `
+    <td><input class="ja f-name" value="${esc(it.name_ja || "")}"></td>
+    <td class="c-read"><input class="f-reading" value="${esc(it.reading || "")}"></td>
+    <td class="c-price"><input class="f-price" inputmode="numeric" value="${it.price ?? ""}"></td>
+    <td class="c-pnote"><input class="f-pnote" value="${esc(it.price_note || "")}"></td>
+    <td><input class="f-note" value="${esc(it.note_ja || "")}"></td>
+    <td class="c-x"><button class="small row-del">×</button></td>`;
+  tr.querySelector(".row-del").onclick = () => { tr.remove(); dirty = true; };
+  tr.addEventListener("keydown", e => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    const table = tr.closest("table");
+    if (tr === table.querySelector("tr.item-row:last-of-type")) {
+      const row = itemRow({});
+      table.appendChild(row);
+      row.querySelector("input").focus();
+    } else {
+      tr.nextElementSibling?.querySelector("input")?.focus();
+    }
+  });
+  return tr;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
+function collect(label) {
+  const attributes = {};
+  document.querySelectorAll("[data-attr]").forEach(el => {
+    const v = el.value.trim();
+    attributes[el.dataset.attr] =
+      el.dataset.attr === "columns" ? (v ? parseInt(v, 10) : null) : (v || null);
+  });
+
+  const sections = [];
+  document.querySelectorAll(".section-block").forEach(div => {
+    const header = div.querySelector(".sec-header").value.trim();
+    const items = [];
+    div.querySelectorAll("tr.item-row").forEach(tr => {
+      const name = tr.querySelector(".f-name").value.trim();
+      if (!name) return;
+      const price = tr.querySelector(".f-price").value.trim();
+      items.push({
+        name_ja: name,
+        reading: tr.querySelector(".f-reading").value.trim() || null,
+        price: price ? parseInt(price.replace(/[^0-9]/g, ""), 10) : null,
+        price_note: tr.querySelector(".f-pnote").value.trim() || null,
+        note_ja: tr.querySelector(".f-note").value.trim() || null,
+      });
+    });
+    if (items.length || header) sections.push({ header_ja: header || null, items });
+  });
+
+  return {
+    image: label.image,
+    source_file: label.source_file,
+    labeled: true,
+    attributes,
+    sections,
+    decorative_text: $("#decor").value.split("\n").map(s => s.trim()).filter(Boolean),
+    notes: $("#notes").value.trim(),
+  };
+}
+
+async function saveCurrent(label, advance) {
+  const data = collect(label);
+  const itemCount = data.sections.reduce((n, s) => n + s.items.length, 0);
+  if (!itemCount && !confirm("No items entered — save anyway?")) return;
+  if (!data.attributes.provenance) { toast("Set provenance (web/field) before saving"); return; }
+  const res = await api.save(current, data, me);
+  if (res.error) { toast("Save failed: " + res.error); return; }
+  dirty = false;
+  toast(`Saved ${itemCount} items ✓`);
+  if (advance) next(); else editor(current);
+}
+
+/* ---------- claim next ---------- */
+
+async function next() {
+  if (current) { await api.release(current); current = null; }
+  const res = await api.claim(me);
+  if (!res.stem) { toast("Nothing left to label 🎉"); dashboard(); return; }
+  editor(res.stem);
+}
+
+/* ---------- boot ---------- */
+
+function guard(fn) {
+  return () => {
+    if (dirty && !confirm("Discard unsaved changes?")) return;
+    fn();
+  };
+}
+$("#navUpload").onclick = guard(uploadPage);
+$("#navDash").onclick = guard(dashboard);
+$("#navNext").onclick = guard(next);
+
+if (me && pass) {
+  $("#whoami").textContent = me;
+  api.ping().then(() => uploadPage()).catch(() => {});
+} else {
+  gate();
+}
+</script>
+</body>
+</html>

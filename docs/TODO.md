@@ -13,23 +13,33 @@ Ordered by what unblocks what. Items marked 🔑 are things only you can do; not
    ```
    Costs a few cents. If it works on one image, the full 47 is one command.
 3. 🔑 **Verify `benchmark/labels/menu.json`.** I transcribed it from the image but did not independently verify it. Open the image next to the label and check every item and price. It's your worked example; if it's wrong, everything you label after it copies the mistake.
-4. **Decide the app name direction** (open question #4). It blocks the bundle ID, App Store name reservation and ASO later. A decision "keep Oshinagaki for now, revisit before TestFlight" is fine, just make it consciously.
+4. 🔑 **Deploy the hosted collector and share it.** The app is built and tested locally (`collector/`); it needs your Cloudflare account:
+   ```bash
+   cd collector && npm install
+   npx wrangler login
+   npx wrangler r2 bucket create japan-menu-collector
+   npx wrangler secret put PASSCODE
+   npx wrangler deploy
+   export COLLECTOR_URL=<printed workers.dev URL> COLLECTOR_PASSCODE=<passcode>
+   .venv/bin/python benchmark/scripts/sync_remote.py push   # seed with the 47 web images
+   ```
+   Then send the URL + passcode to friends in Japan. Anyone can upload menu photos from their phone at dinner; Japanese readers can label. See `collector/README.md`.
+5. **Decide the app name direction** (open question #4). It blocks the bundle ID, App Store name reservation and ASO later. *Current call (Aug 2026): the project is "japan-menu-app" for now; Oshinagaki stays a UI placeholder. Revisit before TestFlight.*
 
 ## Ongoing (the 2–3 week background loop)
 
-5. 🔑 **Photograph menus in real venues.** Target 30–50, weighted toward what the current set completely lacks: chalkboard specials, 短冊 wall strips, brush script, dim light, glare, angled one-handed shots. Every dinner out is a data-collection run. Shoot the ugly ones on purpose; a photo you're embarrassed by is a good test case.
-6. 🔑 **Label as you go — use the web tool.** After each batch:
+6. 🔑 **Photograph menus in real venues — and upload on the spot.** Target 30–50, weighted toward what the current set completely lacks: chalkboard specials, 短冊 wall strips, brush script, dim light, glare, angled one-handed shots. Every dinner out is a data-collection run, and with the collector deployed, upload happens at the table: open the URL, snap, done. Friends with the passcode can do the same from their own dinners. Shoot the ugly ones on purpose; a photo you're embarrassed by is a good test case.
+7. 🔑 **Label as you go, review what others label.** Labeling happens in the same hosted app (or the local tool, `python3 benchmark/labeling/server.py`, for offline sessions). Contributor labels arrive marked `needs review`; verify them against the image before they count. After each session:
    ```bash
-   .venv/bin/python benchmark/scripts/normalize.py <folder-of-new-photos>
-   .venv/bin/python benchmark/scripts/init_labels.py --provenance field
-   python3 benchmark/labeling/server.py     # -> http://localhost:8788
+   .venv/bin/python benchmark/scripts/sync_remote.py pull
+   git diff benchmark/labels    # review, then commit
    ```
-   The tool shows image and form side by side and writes into `benchmark/labels/` directly. To recruit Japanese-reading friends, run `cloudflared tunnel --url http://localhost:8788` and share the URL privately; their labels arrive marked `needs review`, and you verify them in the Review flow before they count. Do 2–3 per evening rather than a heroic weekend; label quality drops fast with fatigue.
-7. **Label 10–15 of the existing web images too.** They're the clean baseline the field numbers get compared against, and labeling easy images first builds the habit before the chalkboards test it.
+   Do 2–3 per evening rather than a heroic weekend; label quality drops fast with fatigue.
+8. **Label 10–15 of the existing web images too.** They're the clean baseline the field numbers get compared against, and labeling easy images first builds the habit before the chalkboards test it.
 
 ## When ~10 field photos are labeled
 
-8. **Run the first real benchmark sweep:**
+9. **Run the first real benchmark sweep:**
    ```bash
    .venv/bin/python benchmark/scripts/run_parse.py --model claude-opus-5 --effort low
    .venv/bin/python benchmark/scripts/run_parse.py --model claude-sonnet-5 --effort low
@@ -37,13 +47,13 @@ Ordered by what unblocks what. Items marked 🔑 are things only you can do; not
    .venv/bin/python benchmark/scripts/score.py benchmark/results/<run>.json --per-image
    ```
    Look at: field recall vs web recall, price accuracy on multi-column menus, whether `low` confidence is actually less accurate than `high`, and cost per image.
-9. **Make the go/no-go call** (PRD Phase 0): does parse quality on hard handwritten menus hold, or does V1 need a "we couldn't read this" path? Does worst-case cost (resident scanning daily) clear ¥600/month?
+10. **Make the go/no-go call** (PRD Phase 0): does parse quality on hard handwritten menus hold, or does V1 need a "we couldn't read this" path? Does worst-case cost (resident scanning daily) clear ¥600/month?
 
 ## After go/no-go (unblocked by the numbers)
 
-10. Build the Cloudflare Worker with the winning model, and swap `FixtureParseService` for a `BackendParseService` — the `ParseService` protocol in `app/Oshinagaki/Services/ParseService.swift` is the only seam that changes.
-11. Price the tiers with real per-scan cost (PRD §9).
-12. Start the curated dictionary seed list (the parser's uncached-term log tells you what to add first — but that log only exists once the backend does).
+11. Build the Cloudflare Worker with the winning model, and swap `FixtureParseService` for a `BackendParseService` — the `ParseService` protocol in `app/Oshinagaki/Services/ParseService.swift` is the only seam that changes.
+12. Price the tiers with real per-scan cost (PRD §9).
+13. Start the curated dictionary seed list (the parser's uncached-term log tells you what to add first — but that log only exists once the backend does).
 
 ---
 
