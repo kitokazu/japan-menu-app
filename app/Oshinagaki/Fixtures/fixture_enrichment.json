@@ -1,0 +1,840 @@
+{
+  "sections": {
+    "サラダ&野菜": "Salads & vegetables",
+    "串カツ": "Kushikatsu, deep-fried skewers",
+    "あなどれないつまみ": "Small plates you shouldn't underestimate",
+    "〆しめ": "Shime, dishes to finish the night",
+    "甘味": "Desserts"
+  },
+  "items": {
+    "山盛り貝入りポテトサラダ": {
+      "english": "Heaping potato salad with shellfish",
+      "reading": "やまもりかいいりポテトサラダ",
+      "romaji": "yamamori kai-iri poteto sarada",
+      "description": "Japanese potato salad, creamy and slightly sweet, piled high and mixed with pieces of shellfish. Served cold.",
+      "photo": "dish_potato_salad",
+      "segments": [
+        {
+          "t": "山",
+          "r": "やま"
+        },
+        {
+          "t": "盛",
+          "r": "も"
+        },
+        {
+          "t": "り"
+        },
+        {
+          "t": "貝",
+          "r": "かい"
+        },
+        {
+          "t": "入",
+          "r": "い"
+        },
+        {
+          "t": "りポテトサラダ"
+        }
+      ]
+    },
+    "フレッシュパクチーサラダ": {
+      "english": "Fresh cilantro salad",
+      "reading": "フレッシュパクチーサラダ",
+      "romaji": "furesshu pakuchī sarada",
+      "description": "A salad built around a big handful of raw cilantro, called pakuchi here. Bright and herbal. Skip it if you dislike cilantro.",
+      "photo": "dish_pakuchi_salad",
+      "segments": [
+        {
+          "t": "フレッシュパクチーサラダ"
+        }
+      ]
+    },
+    "スモーク牡蠣のビネガーサラダ": {
+      "english": "Smoked oyster vinegar salad",
+      "reading": "スモークかきのビネガーサラダ",
+      "romaji": "sumōku kaki no binegā sarada",
+      "description": "Smoked oysters over greens with a sharp vinegar dressing. Smoky, briny, and acidic. Good with beer.",
+      "photo": "dish_smoked_oyster_salad",
+      "segments": [
+        {
+          "t": "スモーク"
+        },
+        {
+          "t": "牡蠣",
+          "r": "かき"
+        },
+        {
+          "t": "のビネガーサラダ"
+        }
+      ]
+    },
+    "子持ち昆布と豆腐のサラダ": {
+      "english": "Tofu salad with herring-roe kelp",
+      "reading": "こもちこんぶととうふのサラダ",
+      "romaji": "komochi konbu to tōfu no sarada",
+      "description": "Cold tofu and greens topped with komochi konbu, kelp coated in tiny herring eggs that pop when you bite. Crunchy and salty against soft tofu.",
+      "photo": "dish_tofu_salad",
+      "segments": [
+        {
+          "t": "子持",
+          "r": "こも"
+        },
+        {
+          "t": "ち"
+        },
+        {
+          "t": "昆布",
+          "r": "こんぶ"
+        },
+        {
+          "t": "と"
+        },
+        {
+          "t": "豆腐",
+          "r": "とうふ"
+        },
+        {
+          "t": "のサラダ"
+        }
+      ]
+    },
+    "採れたて生野菜": {
+      "english": "Fresh-picked raw vegetables",
+      "reading": "とれたてなまやさい",
+      "romaji": "toretate nama yasai",
+      "description": "A plate of raw seasonal vegetables, usually with miso or a dip. Simple and crunchy, the palate cleanser between fried things.",
+      "photo": "dish_green_salad",
+      "segments": [
+        {
+          "t": "採",
+          "r": "と"
+        },
+        {
+          "t": "れたて"
+        },
+        {
+          "t": "生野菜",
+          "r": "なまやさい"
+        }
+      ]
+    },
+    "冷やしトマト": {
+      "english": "Chilled tomato",
+      "reading": "ひやしトマト",
+      "romaji": "hiyashi tomato",
+      "description": "A whole ripe tomato, chilled and sliced, often with a little salt or dressing. Cold, juicy, and refreshing between drinks.",
+      "photo": "dish_tomato",
+      "segments": [
+        {
+          "t": "冷",
+          "r": "ひ"
+        },
+        {
+          "t": "やしトマト"
+        }
+      ]
+    },
+    "オニオンスライス": {
+      "english": "Sliced onion",
+      "reading": "オニオンスライス",
+      "romaji": "onion suraisu",
+      "description": "Thin raw onion slices soaked in water to soften the bite, topped with bonito flakes and soy sauce or ponzu. Sharp, crunchy, cheap.",
+      "photo": "dish_onion_slice",
+      "segments": [
+        {
+          "t": "オニオンスライス"
+        }
+      ]
+    },
+    "牡蠣": {
+      "english": "Oyster",
+      "reading": "かき",
+      "romaji": "kaki",
+      "description": "An oyster breaded and deep-fried on a skewer. Crisp outside, creamy and briny inside. Dip in the shared sauce once, never twice.",
+      "photo": "dish_kushikatsu",
+      "segments": [
+        {
+          "t": "牡蠣",
+          "r": "かき"
+        }
+      ]
+    },
+    "蛤": {
+      "english": "Hamaguri clam",
+      "reading": "はまぐり",
+      "romaji": "hamaguri",
+      "description": "A large hard clam, breaded and fried on a skewer. Sweet, meaty, and firmer than an oyster.",
+      "photo": "dish_kushikatsu",
+      "segments": [
+        {
+          "t": "蛤",
+          "r": "はまぐり"
+        }
+      ]
+    },
+    "浅利": {
+      "english": "Asari clam",
+      "reading": "あさり",
+      "romaji": "asari",
+      "description": "Small Manila clams, breaded and fried on a skewer. Little bites with a strong taste of the sea.",
+      "photo": "dish_kushikatsu",
+      "segments": [
+        {
+          "t": "浅利",
+          "r": "あさり"
+        }
+      ]
+    },
+    "情熱のフライドポテト": {
+      "english": "\"Passion\" fries",
+      "reading": "じょうねつのフライドポテト",
+      "romaji": "jōnetsu no furaido poteto",
+      "description": "French fries with your choice of butter-soy, curry, or nori-salt seasoning. The name is a joke about how seriously the kitchen takes them.",
+      "photo": "dish_fries",
+      "segments": [
+        {
+          "t": "情熱",
+          "r": "じょうねつ"
+        },
+        {
+          "t": "のフライドポテト"
+        }
+      ]
+    },
+    "ガーリックトースト": {
+      "english": "Garlic toast",
+      "reading": "ガーリックトースト",
+      "romaji": "gārikku tōsuto",
+      "description": "Toasted bread with garlic butter. Exactly what you think, and a reliable base for a long night.",
+      "photo": "dish_garlic_toast",
+      "segments": [
+        {
+          "t": "ガーリックトースト"
+        }
+      ]
+    },
+    "枝豆": {
+      "english": "Edamame",
+      "reading": "えだまめ",
+      "romaji": "edamame",
+      "description": "Young soybeans boiled in the pod and salted. Squeeze the beans out with your teeth and leave the pods. The default first order in any izakaya.",
+      "photo": "dish_edamame",
+      "segments": [
+        {
+          "t": "枝豆",
+          "r": "えだまめ"
+        }
+      ]
+    },
+    "きゅうり一本漬け": {
+      "english": "Whole pickled cucumber",
+      "reading": "きゅうりいっぽんづけ",
+      "romaji": "kyūri ippon-zuke",
+      "description": "A whole cucumber lightly pickled in salt, served on a stick or sliced. Cold, crunchy, a little salty. Eat it between fried dishes.",
+      "photo": "dish_kyuri_ippon",
+      "segments": [
+        {
+          "t": "きゅうり"
+        },
+        {
+          "t": "一本",
+          "r": "いっぽん"
+        },
+        {
+          "t": "漬",
+          "r": "づ"
+        },
+        {
+          "t": "け"
+        }
+      ]
+    },
+    "季節の浅漬け": {
+      "english": "Seasonal lightly pickled vegetables",
+      "reading": "きせつのあさづけ",
+      "romaji": "kisetsu no asazuke",
+      "description": "Vegetables pickled for just a few hours in salt and kombu, so they stay crunchy and fresh. Which vegetables depends on the season.",
+      "photo": "dish_tsukemono",
+      "segments": [
+        {
+          "t": "季節",
+          "r": "きせつ"
+        },
+        {
+          "t": "の"
+        },
+        {
+          "t": "浅漬",
+          "r": "あさづ"
+        },
+        {
+          "t": "け"
+        }
+      ]
+    },
+    "牡蠣土鍋ごはん": {
+      "english": "Oyster rice in a clay pot",
+      "reading": "かきどなべごはん",
+      "romaji": "kaki donabe gohan",
+      "description": "Rice cooked in a clay pot with oysters and seasoned dashi, served in the pot and shared. It takes time, so order it early. This one serves two.",
+      "photo": "dish_kaki_gohan",
+      "segments": [
+        {
+          "t": "牡蠣",
+          "r": "かき"
+        },
+        {
+          "t": "土鍋",
+          "r": "どなべ"
+        },
+        {
+          "t": "ごはん"
+        }
+      ]
+    },
+    "常連さんだけのスパイシー牡蠣フライカレー": {
+      "english": "Regulars-only spicy fried-oyster curry",
+      "reading": "じょうれんさんだけのスパイシーかきフライカレー",
+      "romaji": "jōren-san dake no supaishī kaki furai karē",
+      "description": "Japanese curry rice topped with breaded fried oysters, spicier than usual. The \"regulars only\" is a wink, not a rule. Anyone can order it.",
+      "photo": "dish_kaki_fry_curry",
+      "segments": [
+        {
+          "t": "常連",
+          "r": "じょうれん"
+        },
+        {
+          "t": "さんだけのスパイシー"
+        },
+        {
+          "t": "牡蠣",
+          "r": "かき"
+        },
+        {
+          "t": "フライカレー"
+        }
+      ]
+    },
+    "牡蠣ソース焼きそば": {
+      "english": "Yakisoba in oyster sauce",
+      "reading": "かきソースやきそば",
+      "romaji": "kaki sōsu yakisoba",
+      "description": "Stir-fried wheat noodles with cabbage and pork, sauced with oyster sauce instead of the usual sweet Worcestershire-style sauce. Savory and rich.",
+      "photo": "dish_yakisoba",
+      "segments": [
+        {
+          "t": "牡蠣",
+          "r": "かき"
+        },
+        {
+          "t": "ソース"
+        },
+        {
+          "t": "焼",
+          "r": "や"
+        },
+        {
+          "t": "きそば"
+        }
+      ]
+    },
+    "牡蠣ペペロンチーノ": {
+      "english": "Oyster peperoncino",
+      "reading": "かきペペロンチーノ",
+      "romaji": "kaki peperonchīno",
+      "description": "Spaghetti with garlic, olive oil, and chili, plus oysters. An izakaya take on the Italian classic.",
+      "photo": "dish_peperoncino",
+      "segments": [
+        {
+          "t": "牡蠣",
+          "r": "かき"
+        },
+        {
+          "t": "ペペロンチーノ"
+        }
+      ]
+    },
+    "焼きおにぎり": {
+      "english": "Grilled rice ball",
+      "reading": "やきおにぎり",
+      "romaji": "yaki onigiri",
+      "description": "A rice ball brushed with soy sauce and grilled until the outside is crisp and toasty. The menu says it is the cat's favorite.",
+      "photo": "dish_yaki_onigiri",
+      "segments": [
+        {
+          "t": "焼",
+          "r": "や"
+        },
+        {
+          "t": "きおにぎり"
+        }
+      ]
+    },
+    "塩ラーメン": {
+      "english": "Salt ramen",
+      "reading": "しおラーメン",
+      "romaji": "shio rāmen",
+      "description": "Ramen in a clear, salt-seasoned broth, here made with shellfish stock. Lighter than miso or tonkotsu ramen. A common way to end a night of drinking.",
+      "photo": "dish_shio_ramen",
+      "segments": [
+        {
+          "t": "塩",
+          "r": "しお"
+        },
+        {
+          "t": "ラーメン"
+        }
+      ]
+    },
+    "貝出汁茶漬け": {
+      "english": "Clam-broth ochazuke",
+      "reading": "かいだしちゃづけ",
+      "romaji": "kai-dashi chazuke",
+      "description": "Rice with hot clam broth poured over it, eaten like a light soup. Usually topped with nori, sesame, and a little wasabi. The classic last dish of an izakaya night.",
+      "photo": "dish_ochazuke",
+      "segments": [
+        {
+          "t": "貝",
+          "r": "かい"
+        },
+        {
+          "t": "出汁",
+          "r": "だし"
+        },
+        {
+          "t": "茶漬",
+          "r": "ちゃづ"
+        },
+        {
+          "t": "け"
+        }
+      ]
+    },
+    "白玉きなこアイスクリーム": {
+      "english": "Shiratama and kinako ice cream",
+      "reading": "しらたまきなこアイスクリーム",
+      "romaji": "shiratama kinako aisu kurīmu",
+      "description": "Vanilla ice cream with shiratama, soft chewy rice-flour dumplings, dusted with kinako, roasted soybean flour. Nutty and mild.",
+      "photo": "dish_kinako",
+      "segments": [
+        {
+          "t": "白玉",
+          "r": "しらたま"
+        },
+        {
+          "t": "きなこアイスクリーム"
+        }
+      ]
+    },
+    "杏仁豆腐": {
+      "english": "Almond tofu",
+      "reading": "あんにんどうふ",
+      "romaji": "annin dōfu",
+      "description": "A chilled, milky almond-flavored jelly, often served in light syrup with fruit. Not actually tofu. It is named for the texture.",
+      "photo": "dish_annin_tofu",
+      "segments": [
+        {
+          "t": "杏仁豆腐",
+          "r": "あんにんどうふ"
+        }
+      ]
+    },
+    "懐かしのメロンボール": {
+      "english": "Nostalgic melon ball",
+      "reading": "なつかしのメロンボール",
+      "romaji": "natsukashi no meron bōru",
+      "description": "A melon sherbet sold in a plastic melon-shaped cup, a convenience-store classic since the 1970s. Pure nostalgia for anyone who grew up in Japan.",
+      "photo": "dish_melon_ball",
+      "segments": [
+        {
+          "t": "懐",
+          "r": "なつ"
+        },
+        {
+          "t": "かしのメロンボール"
+        }
+      ]
+    }
+  },
+  "kanji": {
+    "山": {
+      "meaning": "mountain",
+      "kun": "やま",
+      "kun_romaji": "yama",
+      "on": "サン",
+      "on_romaji": "san",
+      "photo": "kanji_5c71",
+      "photo_credit": "Romain Guy from San Francisco, USA"
+    },
+    "盛": {
+      "meaning": "pile up, serve",
+      "kun": "も(る)",
+      "kun_romaji": "mo(ru)",
+      "on": "セイ",
+      "on_romaji": "sei",
+      "photo": "kanji_76db",
+      "photo_credit": "Terence Ong"
+    },
+    "貝": {
+      "meaning": "shellfish",
+      "kun": "かい",
+      "kun_romaji": "kai",
+      "on": "バイ",
+      "on_romaji": "bai",
+      "photo": "kanji_8c9d",
+      "photo_credit": "Kritzolina"
+    },
+    "入": {
+      "meaning": "put in, enter",
+      "kun": "い(る)",
+      "kun_romaji": "i(ru)",
+      "on": "ニュウ",
+      "on_romaji": "nyū",
+      "photo": "kanji_5165",
+      "photo_credit": "先従隗始"
+    },
+    "子": {
+      "meaning": "child, egg",
+      "kun": "こ",
+      "kun_romaji": "ko",
+      "on": "シ",
+      "on_romaji": "shi",
+      "photo": "kanji_5b50",
+      "photo_credit": "unnamed"
+    },
+    "持": {
+      "meaning": "hold, have",
+      "kun": "も(つ)",
+      "kun_romaji": "mo(tsu)",
+      "on": "ジ",
+      "on_romaji": "ji",
+      "photo": "kanji_6301",
+      "photo_credit": "alex~ from Buenos Aires, Argentina"
+    },
+    "昆": {
+      "meaning": "kelp (in 昆布)",
+      "kun": null,
+      "kun_romaji": null,
+      "on": "コン",
+      "on_romaji": "kon",
+      "photo": "kanji_6606",
+      "photo_credit": "Alice Wiegand, (Lyzzy)"
+    },
+    "布": {
+      "meaning": "cloth",
+      "kun": "ぬの",
+      "kun_romaji": "nuno",
+      "on": "フ",
+      "on_romaji": "fu",
+      "photo": "kanji_5e03",
+      "photo_credit": "Culture Japon"
+    },
+    "豆": {
+      "meaning": "bean",
+      "kun": "まめ",
+      "kun_romaji": "mame",
+      "on": "トウ",
+      "on_romaji": "tō",
+      "photo": "kanji_8c46",
+      "photo_credit": "unnamed"
+    },
+    "腐": {
+      "meaning": "ferment, rot",
+      "kun": "くさ(る)",
+      "kun_romaji": "kusa(ru)",
+      "on": "フ",
+      "on_romaji": "fu",
+      "photo": "kanji_8150",
+      "photo_credit": "ノボホショコロトソ"
+    },
+    "採": {
+      "meaning": "pick, gather",
+      "kun": "と(る)",
+      "kun_romaji": "to(ru)",
+      "on": "サイ",
+      "on_romaji": "sai",
+      "photo": "kanji_63a1",
+      "photo_credit": "OtengPortia"
+    },
+    "生": {
+      "meaning": "raw, life",
+      "kun": "なま",
+      "kun_romaji": "nama",
+      "on": "セイ",
+      "on_romaji": "sei",
+      "photo": "kanji_751f",
+      "photo_credit": "Daderot"
+    },
+    "野": {
+      "meaning": "field",
+      "kun": "の",
+      "kun_romaji": "no",
+      "on": "ヤ",
+      "on_romaji": "ya",
+      "photo": "kanji_91ce",
+      "photo_credit": "Kropsoq"
+    },
+    "菜": {
+      "meaning": "vegetable",
+      "kun": "な",
+      "kun_romaji": "na",
+      "on": "サイ",
+      "on_romaji": "sai",
+      "photo": "kanji_83dc",
+      "photo_credit": "Cheng-en Cheng from Taichung City, Taiwan"
+    },
+    "冷": {
+      "meaning": "cold, chill",
+      "kun": "ひ(やす)",
+      "kun_romaji": "hi(yasu)",
+      "on": "レイ",
+      "on_romaji": "rei",
+      "photo": "kanji_51b7",
+      "photo_credit": "unnamed"
+    },
+    "牡": {
+      "meaning": "male",
+      "kun": "お",
+      "kun_romaji": "o",
+      "on": "ボ",
+      "on_romaji": "bo",
+      "photo": "kanji_7261",
+      "photo_credit": "Paulus Potter / Paulus Potter"
+    },
+    "蠣": {
+      "meaning": "oyster",
+      "kun": "かき",
+      "kun_romaji": "kaki",
+      "on": "レイ",
+      "on_romaji": "rei",
+      "photo": "kanji_8823",
+      "photo_credit": "David Monniaux"
+    },
+    "蛤": {
+      "meaning": "clam",
+      "kun": "はまぐり",
+      "kun_romaji": "hamaguri",
+      "on": "コウ",
+      "on_romaji": "kō",
+      "photo": "kanji_86e4",
+      "photo_credit": "yo &amp;"
+    },
+    "浅": {
+      "meaning": "shallow, light",
+      "kun": "あさ(い)",
+      "kun_romaji": "asa(i)",
+      "on": "セン",
+      "on_romaji": "sen",
+      "photo": "kanji_6d45",
+      "photo_credit": "Josep M. Gracia"
+    },
+    "利": {
+      "meaning": "benefit",
+      "kun": "き(く)",
+      "kun_romaji": "ki(ku)",
+      "on": "リ",
+      "on_romaji": "ri",
+      "photo": "kanji_5229",
+      "photo_credit": "ASTELUS"
+    },
+    "情": {
+      "meaning": "feeling",
+      "kun": "なさ(け)",
+      "kun_romaji": "nasa(ke)",
+      "on": "ジョウ",
+      "on_romaji": "jō",
+      "photo": "kanji_60c5",
+      "photo_credit": "Dylan.cronk"
+    },
+    "熱": {
+      "meaning": "heat",
+      "kun": "あつ(い)",
+      "kun_romaji": "atsu(i)",
+      "on": "ネツ",
+      "on_romaji": "netsu",
+      "photo": "kanji_71b1",
+      "photo_credit": "MarcusObal"
+    },
+    "枝": {
+      "meaning": "branch",
+      "kun": "えだ",
+      "kun_romaji": "eda",
+      "on": "シ",
+      "on_romaji": "shi",
+      "photo": "kanji_679d",
+      "photo_credit": "Dietmar Rabich"
+    },
+    "一": {
+      "meaning": "one",
+      "kun": "ひと(つ)",
+      "kun_romaji": "hito(tsu)",
+      "on": "イチ",
+      "on_romaji": "ichi",
+      "photo": null,
+      "photo_credit": null
+    },
+    "本": {
+      "meaning": "counter for long things, book",
+      "kun": "もと",
+      "kun_romaji": "moto",
+      "on": "ホン",
+      "on_romaji": "hon",
+      "photo": "kanji_672c",
+      "photo_credit": "Katsushika Hokusai"
+    },
+    "漬": {
+      "meaning": "pickle, soak",
+      "kun": "つ(ける)",
+      "kun_romaji": "tsu(keru)",
+      "on": "シ",
+      "on_romaji": "shi",
+      "photo": "kanji_6f2c",
+      "photo_credit": "irrational_cat"
+    },
+    "季": {
+      "meaning": "season",
+      "kun": null,
+      "kun_romaji": null,
+      "on": "キ",
+      "on_romaji": "ki",
+      "photo": "kanji_5b63",
+      "photo_credit": "そらみみ"
+    },
+    "節": {
+      "meaning": "season, section",
+      "kun": "ふし",
+      "kun_romaji": "fushi",
+      "on": "セツ",
+      "on_romaji": "setsu",
+      "photo": "kanji_7bc0",
+      "photo_credit": "Jules Verne Times Two"
+    },
+    "土": {
+      "meaning": "earth, clay",
+      "kun": "つち",
+      "kun_romaji": "tsuchi",
+      "on": "ド",
+      "on_romaji": "do",
+      "photo": "kanji_571f",
+      "photo_credit": "Soil Science"
+    },
+    "鍋": {
+      "meaning": "pot",
+      "kun": "なべ",
+      "kun_romaji": "nabe",
+      "on": "カ",
+      "on_romaji": "ka",
+      "photo": "kanji_934b",
+      "photo_credit": "photo: Qurren (talk)"
+    },
+    "常": {
+      "meaning": "usual",
+      "kun": "つね",
+      "kun_romaji": "tsune",
+      "on": "ジョウ",
+      "on_romaji": "jō",
+      "photo": "kanji_5e38",
+      "photo_credit": "Hajime NAKANO"
+    },
+    "連": {
+      "meaning": "in a row, link",
+      "kun": "つ(れる)",
+      "kun_romaji": "tsu(reru)",
+      "on": "レン",
+      "on_romaji": "ren",
+      "photo": "kanji_9023",
+      "photo_credit": "lumoplank"
+    },
+    "焼": {
+      "meaning": "grill, burn",
+      "kun": "や(く)",
+      "kun_romaji": "ya(ku)",
+      "on": "ショウ",
+      "on_romaji": "shō",
+      "photo": "kanji_713c",
+      "photo_credit": "Soulfruit"
+    },
+    "塩": {
+      "meaning": "salt",
+      "kun": "しお",
+      "kun_romaji": "shio",
+      "on": "エン",
+      "on_romaji": "en",
+      "photo": "kanji_5869",
+      "photo_credit": "Relativity"
+    },
+    "出": {
+      "meaning": "come out",
+      "kun": "で(る)",
+      "kun_romaji": "de(ru)",
+      "on": "シュツ",
+      "on_romaji": "shutsu",
+      "photo": "kanji_51fa",
+      "photo_credit": "Basile Morin"
+    },
+    "汁": {
+      "meaning": "broth, juice",
+      "kun": "しる",
+      "kun_romaji": "shiru",
+      "on": "ジュウ",
+      "on_romaji": "jū",
+      "photo": "kanji_6c41",
+      "photo_credit": "ish-ka"
+    },
+    "茶": {
+      "meaning": "tea",
+      "kun": null,
+      "kun_romaji": null,
+      "on": "チャ · サ",
+      "on_romaji": "cha · sa",
+      "photo": "kanji_8336",
+      "photo_credit": "Douglas P Perkins"
+    },
+    "白": {
+      "meaning": "white",
+      "kun": "しろ",
+      "kun_romaji": "shiro",
+      "on": "ハク",
+      "on_romaji": "haku",
+      "photo": "kanji_767d",
+      "photo_credit": "Anna Frodesiak"
+    },
+    "玉": {
+      "meaning": "ball, jewel",
+      "kun": "たま",
+      "kun_romaji": "tama",
+      "on": "ギョク",
+      "on_romaji": "gyoku",
+      "photo": "kanji_7389",
+      "photo_credit": "NY066"
+    },
+    "杏": {
+      "meaning": "apricot",
+      "kun": "あんず",
+      "kun_romaji": "anzu",
+      "on": "アン",
+      "on_romaji": "an",
+      "photo": "kanji_674f",
+      "photo_credit": "Fir0002"
+    },
+    "仁": {
+      "meaning": "kernel",
+      "kun": null,
+      "kun_romaji": null,
+      "on": "ジン · ニン",
+      "on_romaji": "jin · nin",
+      "photo": "kanji_4ec1",
+      "photo_credit": "Ivar Leidus"
+    },
+    "懐": {
+      "meaning": "nostalgic, bosom",
+      "kun": "なつ(かしい)",
+      "kun_romaji": "natsu(kashii)",
+      "on": "カイ",
+      "on_romaji": "kai",
+      "photo": "kanji_61d0",
+      "photo_credit": "Stephen Kelly"
+    }
+  }
+}

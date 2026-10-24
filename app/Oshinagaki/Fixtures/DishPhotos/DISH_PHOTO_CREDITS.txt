@@ -1,0 +1,25 @@
+Dish photos used in the demo fixture, from Wikimedia Commons.
+
+dish_potato_salad.jpg: 吉野家ポテトサラダ.jpg · CC BY-SA 4.0 · Kyu3a · https://commons.wikimedia.org/wiki/File:%E5%90%89%E9%87%8E%E5%AE%B6%E3%83%9D%E3%83%86%E3%83%88%E3%82%B5%E3%83%A9%E3%83%80.jpg
+dish_tofu_salad.jpg: Beancurd salad (36406658502).jpg · CC BY-SA 2.0 · pelican from Tokyo, Japan · https://commons.wikimedia.org/wiki/File:Beancurd%20salad%20%2836406658502%29.jpg
+dish_green_salad.jpg: Coleslaw with rocket (arugula) and lemon dressing.jpg · CC BY-SA 3.0 · Horacio Cambeiro · https://commons.wikimedia.org/wiki/File:Coleslaw%20with%20rocket%20%28arugula%29%20and%20lemon%20dressing.jpg
+dish_tomato.jpg: A sliced tomato at home.jpg · CC BY-SA 4.0 · Olgatladi2020 · https://commons.wikimedia.org/wiki/File:A%20sliced%20tomato%20at%20home.jpg
+dish_onion_slice.jpg: Shirasu in salad.jpg · CC BY-SA 2.0 · Yuki Koga · https://commons.wikimedia.org/wiki/File:Shirasu%20in%20salad.jpg
+dish_kushikatsu.jpg: Miso katsu by OiMax.jpg · CC BY 2.0 · OiMax · https://commons.wikimedia.org/wiki/File:Miso%20katsu%20by%20OiMax.jpg
+dish_fries.jpg: French fries (48855760853).jpg · CC BY-SA 2.0 · bob walker from London, UK · https://commons.wikimedia.org/wiki/File:French%20fries%20%2848855760853%29.jpg
+dish_garlic_toast.jpg: Garlic Toast - 8420898886.jpg · CC BY 2.0 · Thriving Vegetarian · https://commons.wikimedia.org/wiki/File:Garlic%20Toast%20-%208420898886.jpg
+dish_edamame.jpg: Edamame on a bamboo bowl by yomi955.jpg · CC BY 2.0 · yomi955 · https://commons.wikimedia.org/wiki/File:Edamame%20on%20a%20bamboo%20bowl%20by%20yomi955.jpg
+dish_tsukemono.jpg: セロリの浅漬け。にがくない！ (7621174686).jpg · CC BY-SA 2.0 · hirotomo t from japan · https://commons.wikimedia.org/wiki/File:%E3%82%BB%E3%83%AD%E3%83%AA%E3%81%AE%E6%B5%85%E6%BC%AC%E3%81%91%E3%80%82%E3%81%AB%E3%81%8C%E3%81%8F%E3%81%AA%E3%81%84%EF%BC%81%20%287621174686%29.jpg
+dish_kaki_fry_curry.jpg: カキフライ.jpg · CC BY-SA 3.0 · unnamed · https://commons.wikimedia.org/wiki/File:%E3%82%AB%E3%82%AD%E3%83%95%E3%83%A9%E3%82%A4.jpg
+dish_yakisoba.jpg: Yakisoba - 01.jpg · CC BY-SA 4.0 · Quercus acuta · https://commons.wikimedia.org/wiki/File:Yakisoba%20-%2001.jpg
+dish_peperoncino.jpg: Spaghetti aglio e olio (La Mirada Restaurant Richardstraße Berlin).jpg · CC BY-SA 4.0 · IgorCalzone1 · https://commons.wikimedia.org/wiki/File:Spaghetti%20aglio%20e%20olio%20%28La%20Mirada%20Restaurant%20Richardstra%C3%9Fe%20Berlin%29.jpg
+dish_yaki_onigiri.jpg: Yaki-Onigiri 001.jpg · CC0 · Ocdp · https://commons.wikimedia.org/wiki/File:Yaki-Onigiri%20001.jpg
+dish_shio_ramen.jpg: Shio-ramen and Chahan of Gantetsu 02.jpg · CC BY 4.0 · ノボホショコロトソ · https://commons.wikimedia.org/wiki/File:Shio-ramen%20and%20Chahan%20of%20Gantetsu%2002.jpg
+dish_ochazuke.jpg: Instant chazuke by shibainu.jpg · CC BY 2.0 · shibainu · https://commons.wikimedia.org/wiki/File:Instant%20chazuke%20by%20shibainu.jpg
+dish_kinako.jpg: Warabimochi.jpg · CC BY-SA 4.0 · Capyboni · https://commons.wikimedia.org/wiki/File:Warabimochi.jpg
+dish_annin_tofu.jpg: Almond jelly.jpg · CC BY-SA 2.0 · Fumiaki Yoshimatsu from Tokyo, Japan · https://commons.wikimedia.org/wiki/File:Almond%20jelly.jpg
+dish_pakuchi_salad.jpg: Roast duck salad, mint, coriander, radish, kaffir lime, hot and sour sauce - Christchurch, New Zealand.jpg · CC0 · Daderot · https://commons.wikimedia.org/wiki/File%3ARoast%20duck%20salad%2C%20mint%2C%20coriander%2C%20radish%2C%20kaffir%20lime%2C%20hot%20and%20sour%20sauce%20-%20Christchurch%2C%20New%20Zealand.jpg
+dish_smoked_oyster_salad.jpg: Salad with smoked oysters, croutons, and cheddar cheese, with garlic vinaigrette - Massachusetts.jpg · CC0 · Daderot · https://commons.wikimedia.org/wiki/File%3ASalad%20with%20smoked%20oysters%2C%20croutons%2C%20and%20cheddar%20cheese%2C%20with%20garlic%20vinaigrette%20-%20Massachusetts.jpg
+dish_kyuri_ippon.jpg: Whole pickled cucumbers on a white plate.jpg · CC BY-SA 3.0 · Horacio Cambeiro · https://commons.wikimedia.org/wiki/File%3AWhole%20pickled%20cucumbers%20on%20a%20white%20plate.jpg
+dish_kaki_gohan.jpg: Oyster rice in a pot (5441714730).jpg · CC BY-SA 2.0 · pelican from Tokyo, Japan · https://commons.wikimedia.org/wiki/File%3AOyster%20rice%20in%20a%20pot%20%285441714730%29.jpg
+dish_melon_ball.jpg: Melon sorbet.jpg · CC BY-SA 2.0 · stu_spivack · https://commons.wikimedia.org/wiki/File%3AMelon%20sorbet.jpg

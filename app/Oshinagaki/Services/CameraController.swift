@@ -21,12 +21,14 @@ final class CameraController: NSObject, ObservableObject {
     }
 
     func start() async {
-        guard await requestPermission() else { return }
-        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
-              let input = try? AVCaptureDeviceInput(device: device)
-        else {
-            // Simulator, or a device without a usable camera. The library
-            // picker remains as the capture path.
+        // Simulator, or a device without a usable camera: don't even ask for
+        // permission. The library picker (and the bundled sample) remain as
+        // the capture path.
+        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
+            isAvailable = false
+            return
+        }
+        guard await requestPermission(), let input = try? AVCaptureDeviceInput(device: device) else {
             isAvailable = false
             return
         }
